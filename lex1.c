@@ -11,12 +11,10 @@
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
-
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
@@ -135,17 +133,84 @@ TOKEN special (TOKEN tok)
 /* Get and convert unsigned numbers of all types. */
 TOKEN number (TOKEN tok)
   { long num;
-    int  c, charval;
+    int  c, intVal;
+    int floatNo = 0, exponentNo = 0, negativeNo = 0, exponent = 0;
     num = 0;
+    multiplier = 1;
     while ( (c = peekchar()) != EOF
             && CHARCLASS[c] == NUMERIC)
-      {   c = getchar();
-          charval = (c - '0');
-          num = num * 10 + charval;
+      {   
+        intVal = (getchar() - '0');]
+          if ( num > INT_MAX ) {
+			exponent ++;
+			intError = 1;
+		} else {
+			num = num * 10 + intVal;
+		}
         }
-    tok->tokentype = NUMBERTOK;
-    tok->basicdt = INTEGER;
-    tok->intval = num;
-    return (tok);
-  }
 
+    if ( num > INT_MAX ) {
+		exponent ++;
+		intError = 1;
+	} 
+
+	if (c = peekchar() != EOF &&  c = ".") {
+		if (d = peek2char() != EOF && CHARCLASS[d] == NUMERIC) {
+			c = getchar();
+			intError = 0; //floating point number has higher max
+			floatNo = 1;
+			while ((c = peekchar()) != EOF && (CHARCLASS[c] == NUMERIC)) {
+				intVal = getchar() - '0'
+				multiplier *= 10;
+				decimal = deicaml + ((double)intVal/multiplier);
+			}
+			real = (double) num + decimal; 
+
+		}
+	}
+
+	if (c = peekchar() != EOF &&  c = "e"){
+		c = getchar();
+		exponentNo = 1;
+		int sign = 1;
+        sign *= (c = peekchar()) == '-' ? -1 : 1;
+		while ((c = peekchar()) != EOF && CHARCLASS[c] == NUMERIC &&  expValue > INT_MAX) {
+			intVal = getchar() - '0';
+			exponentVal = exponentVal * 10 + intVal;		
+		}
+		exponent = exponent + sign*exponentVal;
+		real = real / pow (10, exponent);
+		
+		if (real > FLT_MAX || real < FLT_MIN) {
+			printf("Floating number too big or small \n");
+			// return getRealTok(0.0, tok);
+		} else {
+			tok->tokentype = NUMBERTOK;
+			tok->datatype = REAL;
+			tok->realval = real;
+			return tok;
+		}
+
+	}
+
+	if (floatNo) {
+		if (real > FLT_MAX || real < FLT_MIN) {
+			printf("Floating number too big or small \n");
+			// return getRealTok(0.0, tok);
+		} else {
+			tok->tokentype = NUMBERTOK;
+			tok->datatype = REAL;
+			tok->realval = real;
+			return tok;
+		}
+	}
+
+	if (intError) {
+		printf("Integer is too big\n");
+	} else 
+{	    tok->tokentype = NUMBERTOK; 
+	    tok->basicdt = INTEGER;
+	    tok->intval = num;
+	    return (tok);
+	}
+  }
