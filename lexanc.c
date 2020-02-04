@@ -120,53 +120,56 @@ TOKEN getStringTok(char word[], TOKEN tok) {
 
 TOKEN getIntegerTok(int val, TOKEN tok) {
 	tok->tokentype = NUMBERTOK;
-	tok->basicdt = INTEGER;
+	tok->datatype = INTEGER;
 	tok->intval = val;
 	return tok;
 }
 
 TOKEN getRealTok(double val, TOKEN tok) {
 	tok->tokentype = NUMBERTOK;
-	tok->basicdt = REAL;
+	tok->datatype = REAL;
 	tok->realval = val;
 	return tok;
 }
 /* Get identifiers and reserved words */
 TOKEN identifier (TOKEN tok)
 {
-	int c, i, size = 0;
-	char word[256];
-	while ( (c = peekchar()) != EOF
-			&& (CHARCLASS[c] == ALPHA || CHARCLASS[c] == NUMERIC))
-	{ 
-		c = getchar();
-		word[size] = c;
-		size++;
-	}
+  int  c, count, size = 0;    
+  char variable[15];
+  while ( (c = peekchar()) != EOF
+          && (size < 16) &&(CHARCLASS[c] == ALPHA || CHARCLASS[c] == NUMERIC)) 
+  {
+    variable[size] = getchar();
+    size += 1;
+  }
+  variable[size] = '\0';
+  // check if it is a word operator
+  for (count = 13; count <= 18 ; count++)
+  {
+    if (strcmp(identifier, operators[count]) == 0)
+    {
+      tok->tokentype = OPERATOR;
+      tok->whichval = count+1;
+      return tok;
+    }
+  }
 
-	if (size >= 16)
-		word[15] = '\0';
-	else
-		word[size] = '\0';
+  //check if it is a reserved Word
+  for (count = 0;  count <= 28; count++)
+  {
+    if (strcmp(identifier, reservedWords[count]) == 0)
+    {
+      tok->tokentype = RESERVED;
+      tok->whichval = count+1;
+      return tok;
+    }
+  }
+  //it is an identifier
+  tok->tokentype = IDENTIFIERTOK;
+  strcpy(tok->stringval, identifier);
+  return tok;
 
 
-	for (i = 0; i < 29; i++)
-	{
-		if (strcmp(word, reservedWords[i]) == 0)
-		{
-			return getReservedWordTok(i + 1, tok);
-		}
-	}
-
-	for (i = 13; i < 19 ; i++)
-	{
-		if (strcmp(word, operators[i]) == 0)
-		{
-			return getOperatorTok(i + 1, tok);
-		}
-	}
-
-	return getIdentifierTok(word, tok); 
 }
 
 TOKEN getstring (TOKEN tok)
