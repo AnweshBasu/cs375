@@ -101,7 +101,7 @@ TOKEN identifier (TOKEN tok)
     if (strcmp(variable, operators[count]) == 0)
     {
       tok->tokentype = OPERATOR;
-      tok->whichval = i+1;
+      tok->whichval = count+1;
       return tok;
     }
   }
@@ -118,7 +118,7 @@ TOKEN identifier (TOKEN tok)
   }
   //it is an identifier
   tok->tokentype = IDENTIFIERTOK;
-  strcpy(tok->stringval, word);
+  strcpy(tok->stringval, identifier);
   return tok;
 }
 
