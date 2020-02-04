@@ -23,7 +23,7 @@
 #include <ctype.h>
 #include <string.h>
 #include <limits.h>
-#include <float.h
+#include <float.h>
 #include "token.h"
 #include "lexan.h"
 
