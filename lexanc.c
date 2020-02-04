@@ -23,8 +23,10 @@
 #include <ctype.h>
 #include <string.h>
 #include <limits.h>
+#include <float.h
 #include "token.h"
 #include "lexan.h"
+
 
 /* This file will work as given with an input file consisting only
    of integers separated by blanks:
@@ -107,7 +109,7 @@ TOKEN identifier (TOKEN tok)
   //check if it is a reserved Word
   for (count = 0;  count <= 28; count++)
   {
-    if (strcmp(word, reservedWords[i]) == 0)
+    if (strcmp(variable, reservedWords[count]) == 0)
     {
       tok->tokentype = RESERVED;
       tok->whichval = i+1;
@@ -133,7 +135,7 @@ TOKEN number (TOKEN tok)
   { long num;
     int  c, d, intVal;
     int floatNo = 0, exponentNo = 0, negativeNo = 0, exponent = 0, exponentVal;
-    int intError, num = 0;
+    int intError;
     int multiplier = 1;
     double decimal, real = 0.0;
     while ( (c = peekchar()) != EOF
