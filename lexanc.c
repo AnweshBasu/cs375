@@ -22,6 +22,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
+#include <limits.h>
 #include "token.h"
 #include "lexan.h"
 
@@ -85,9 +86,8 @@ TOKEN identifier (TOKEN tok)
 {
   int  c, count, size = 0;    
   char variable[15];
-  num = 0;
   while ( (c = peekchar()) != EOF
-          && (size < 16) &&(CHARCLASS[c] == AlPHA || CHARCLASS[c] == NUMERIC)) 
+          && (size < 16) &&(CHARCLASS[c] == ALPHA || CHARCLASS[c] == NUMERIC)) 
   {
     variable[size] = getchar();
     size += 1;
@@ -96,7 +96,7 @@ TOKEN identifier (TOKEN tok)
   // check if it is a word operator
   for (count = 13; count <= 18 ; count++)
   {
-    if (strcmp(word, operators[i]) == 0)
+    if (strcmp(variable, operators[count]) == 0)
     {
       tok->tokentype = OPERATOR;
       tok->whichval = i+1;
@@ -110,16 +110,14 @@ TOKEN identifier (TOKEN tok)
     if (strcmp(word, reservedWords[i]) == 0)
     {
       tok->tokentype = RESERVED;
-      tok->whichval = i+1
+      tok->whichval = i+1;
       return tok;
     }
   }
   //it is an identifier
   tok->tokentype = IDENTIFIERTOK;
   strcpy(tok->stringval, word);
-  return tok
-
-
+  return tok;
 }
 
 TOKEN getstring (TOKEN tok)
@@ -133,14 +131,15 @@ TOKEN special (TOKEN tok)
 /* Get and convert unsigned numbers of all types. */
 TOKEN number (TOKEN tok)
   { long num;
-    int  c, intVal;
-    int floatNo = 0, exponentNo = 0, negativeNo = 0, exponent = 0;
-    num = 0;
-    multiplier = 1;
+    int  c, d, intVal;
+    int floatNo = 0, exponentNo = 0, negativeNo = 0, exponent = 0, exponentVal;
+    int intError, num = 0;
+    int multiplier = 1;
+    double decimal, real = 0.0;
     while ( (c = peekchar()) != EOF
             && CHARCLASS[c] == NUMERIC)
       {   
-        intVal = (getchar() - '0');]
+        intVal = (getchar() - '0');
           if ( num > INT_MAX ) {
 			exponent ++;
 			intError = 1;
@@ -154,27 +153,27 @@ TOKEN number (TOKEN tok)
 		intError = 1;
 	} 
 
-	if (c = peekchar() != EOF &&  c = ".") {
+	if (c = peekchar() != EOF &&  c == ".") {
 		if (d = peek2char() != EOF && CHARCLASS[d] == NUMERIC) {
 			c = getchar();
 			intError = 0; //floating point number has higher max
 			floatNo = 1;
 			while ((c = peekchar()) != EOF && (CHARCLASS[c] == NUMERIC)) {
-				intVal = getchar() - '0'
+				intVal = getchar() - '0';
 				multiplier *= 10;
-				decimal = deicaml + ((double)intVal/multiplier);
+				decimal = decimal + ((double)intVal/multiplier);
 			}
 			real = (double) num + decimal; 
 
 		}
 	}
 
-	if (c = peekchar() != EOF &&  c = "e"){
+	if (c = peekchar() != EOF &&  c == "e"){
 		c = getchar();
 		exponentNo = 1;
 		int sign = 1;
         sign *= (c = peekchar()) == '-' ? -1 : 1;
-		while ((c = peekchar()) != EOF && CHARCLASS[c] == NUMERIC &&  expValue > INT_MAX) {
+		while ((c = peekchar()) != EOF && CHARCLASS[c] == NUMERIC &&  exponentVal > INT_MAX) {
 			intVal = getchar() - '0';
 			exponentVal = exponentVal * 10 + intVal;		
 		}
