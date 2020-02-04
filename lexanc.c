@@ -186,7 +186,7 @@ TOKEN special (TOKEN tok)
 
   for (count = 0; count <= 7 ; count++)
   {
-    if (strcmp(identifier, delimiters[i]) == 0)
+    if (strcmp(identifier, delimiters[count]) == 0)
     {
       tok->tokentype = DELIMITER;
       tok->whichval = count+1;
