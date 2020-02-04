@@ -1,12 +1,12 @@
 (* scantst.pas -- additional examples for cs 375 lexical analyzer *)
 
-//thisisanunusuallylongidentifierbutitislegal;
-//'What the #&*%!'
-//'Don''t forget'
-//'Maximum of 15 characters'
-//x := 123 + 123456789;
-//{ the following comments may prove difficult }
-//(**) u (***) v (****) w (*****) x (******) y (*)*) z
+thisisanunusuallylongidentifierbutitislegal;
+'What the #&*%!'
+'Don''t forget'
+'Maximum of 15 characters'
+x := 123 + 123456789;
+{ the following comments may prove difficult }
+(**) u (***) v (****) w (*****) x (******) y (*)*) z
 
 { You may assume the following limits on numbers: }
 
