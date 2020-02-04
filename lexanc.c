@@ -88,9 +88,8 @@ TOKEN identifier (TOKEN tok)
 {
   int  c, count, size = 0;    
   char variable[15];
-  num = 0;
   while ( (c = peekchar()) != EOF
-          && (size < 16) &&(CHARCLASS[c] == AlPHA || CHARCLASS[c] == NUMERIC)) 
+          && (size < 16) &&(CHARCLASS[c] == ALPHA || CHARCLASS[c] == NUMERIC)) 
   {
     variable[size] = getchar();
     size += 1;
@@ -99,7 +98,7 @@ TOKEN identifier (TOKEN tok)
   // check if it is a word operator
   for (count = 13; count <= 18 ; count++)
   {
-    if (strcmp(identifier, operators[i]) == 0)
+    if (strcmp(identifier, operators[count]) == 0)
     {
       tok->tokentype = OPERATOR;
       tok->whichval = i+1;
@@ -110,24 +109,24 @@ TOKEN identifier (TOKEN tok)
   //check if it is a reserved Word
   for (count = 0;  count <= 28; count++)
   {
-    if (strcmp(identifier, reservedWords[i]) == 0)
+    if (strcmp(identifier, reservedWords[count]) == 0)
     {
       tok->tokentype = RESERVED;
-      tok->whichval = i+1
+      tok->whichval = count+1;
       return tok;
     }
   }
   //it is an identifier
   tok->tokentype = IDENTIFIERTOK;
   strcpy(tok->stringval, identifier);
-  return tok
+  return tok;
 
 
 }
 
 TOKEN getstring (TOKEN tok)
 {
-  int c, count, size = 0;
+  int c, d,  count, size = 0;
   char string[15];
   while ( (c = peekchar()) != EOF && (c != '\n') && size < 16) 
   {
@@ -145,12 +144,12 @@ TOKEN getstring (TOKEN tok)
     else
     {
       string[size] = getchar();
-      size += 1        
+      size += 1;        
     }
   }
-  word[size] = '\0'
-  tok->tokentype = STRINGTOK
-  strcpy(tok->stringval, string)
+  string[size] = '\0';
+  tok->tokentype = STRINGTOK;
+  strcpy(tok->stringval, string);
   return tok;   
 }
 
@@ -162,13 +161,13 @@ TOKEN special (TOKEN tok)
         && (size <= 3) && (CHARCLASS[c] == SPECIAL)) 
   {
     special[size] = getchar();
-    size += 1
+    size += 1;
     if(d = peekchar() != EOF) {
       if ((c == ":" && d == "=") || (c == "<" && (d == ">" || d == "=")) || 
           (c == ">" && d == "=") || (c == "." && d == ".")) 
       {
-        special[size] = getchar()
-        size += 1
+        special[size] = getchar();
+        size += 1;
       }
     }
   }
