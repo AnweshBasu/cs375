@@ -112,7 +112,7 @@ TOKEN identifier (TOKEN tok)
     if (strcmp(variable, reservedWords[count]) == 0)
     {
       tok->tokentype = RESERVED;
-      tok->whichval = i+1;
+      tok->whichval = count+1;
       return tok;
     }
   }
