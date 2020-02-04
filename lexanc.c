@@ -101,7 +101,7 @@ TOKEN identifier (TOKEN tok)
     if (strcmp(identifier, operators[count]) == 0)
     {
       tok->tokentype = OPERATOR;
-      tok->whichval = i+1;
+      tok->whichval = count+1;
       return tok;
     }
   }
@@ -137,7 +137,8 @@ TOKEN getstring (TOKEN tok)
         getchar();  
       }
     }  
-    if ((c == "'") && d = peek2char() != EOF && (d!= "'"))
+    d = peek2char() 
+    if ((c == "'") && (d != EOF && d != "'"))
     {
       break;
     }
@@ -155,7 +156,7 @@ TOKEN getstring (TOKEN tok)
 
 TOKEN special (TOKEN tok)
 {
-  int c, count, size = 0;
+  int c, d, count, size = 0;
   char special[3];
   if ( (c = peekchar()) != EOF
         && (size <= 3) && (CHARCLASS[c] == SPECIAL)) 
@@ -171,7 +172,7 @@ TOKEN special (TOKEN tok)
       }
     }
   }
-  special[size] = '\0'
+  special[size] = '\0';
 
   for (count = 0; count <= 12 ; count++)
   {
