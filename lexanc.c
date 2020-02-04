@@ -35,13 +35,13 @@
    12345 123    345  357
    */
 
-char* operators[] = { '+', '-', '*', '/', ':=', '=', '<>', '<',
+const char* operators[] = { '+', '-', '*', '/', ':=', '=', '<>', '<',
   '<=', '>=', '>', '^', '.', 'and', 'or', 'not',
   'div', 'mod', 'in' };
 
-char* delimiters[] = { ',', ';', ':', '(', ')', '[', ']', '..'};
+const char* delimiters[] = { ',', ';', ':', '(', ')', '[', ']', '..'};
 
-char* reservedWords[] = { 'array', 'begin', 'case', 'const', 'do',
+const char* reservedWords[] = { 'array', 'begin', 'case', 'const', 'do',
   'downto', 'else', 'end', 'file', 'for', 
   'function', 'goto', 'if', 'label', 'nil', 
   'of', 'packed', 'procedure', 'program', 'record',
