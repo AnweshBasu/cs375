@@ -137,7 +137,7 @@ TOKEN getstring (TOKEN tok)
         getchar();  
       }
     }  
-    d = peek2char() 
+    d = peek2char(); 
     if ((c == "'") && (d != EOF && d != "'"))
     {
       break;
