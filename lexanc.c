@@ -179,7 +179,7 @@ TOKEN special (TOKEN tok)
     if (strcmp(identifier, operators[i]) == 0)
     {
       tok->tokentype = OPERATOR;
-      tok->whichval = i+1;
+      tok->whichval = count+1;
       return tok;
     }
   }
@@ -189,7 +189,7 @@ TOKEN special (TOKEN tok)
     if (strcmp(identifier, delimiters[i]) == 0)
     {
       tok->tokentype = DELIMITER;
-      tok->whichval = i+1;
+      tok->whichval = count+1;
       return tok;
     }
   }
