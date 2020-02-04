@@ -187,7 +187,7 @@ TOKEN number (TOKEN tok)
 			// return getRealTok(0.0, tok);
 		} else {
 			tok->tokentype = NUMBERTOK;
-			tok->datatype = REAL;
+			tok->symtype = REAL;
 			tok->realval = real;
 			return tok;
 		}
@@ -200,7 +200,7 @@ TOKEN number (TOKEN tok)
 			// return getRealTok(0.0, tok);
 		} else {
 			tok->tokentype = NUMBERTOK;
-			tok->datatype = REAL;
+			tok->symtype = REAL;
 			tok->realval = real;
 			return tok;
 		}
