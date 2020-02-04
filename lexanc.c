@@ -22,8 +22,8 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
-#include 'token.h'
-#include 'lexan.h'
+#include "token.h"
+#include "lexan.h"
 
 /* This file will work as given with an input file consisting only
    of integers separated by blanks:
