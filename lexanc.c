@@ -241,7 +241,7 @@ TOKEN special (TOKEN tok)
           special[j] = getchar();
           c = special[j];
           d = peekchar();
-          if(c == ':' && d == '=') || (c == '<' && (d == '>' || d == '=')) || (c == '>' && d == '=') || (c == '.' && d == '.')
+          if ((c == ':' && d == '=') || (c == '<' && (d == '>' || d == '=')) || (c == '>' && d == '=') || (c == '.' && d == '.'))
             special[++j] = getchar();
           j++;
           break;
