@@ -233,32 +233,34 @@ TOKEN getstring (TOKEN tok)
 TOKEN special (TOKEN tok)
    {
 
-    char special[3];
+    char sToken[3];
       int j;
-    char c;
+    char c, cclass;
     for(j = 0; j < 3; j++) {
-        if(c = peekchar() && c!= EOF && CHARCLASS[c] == SPECIAL) {
-          special[j] = getchar();
-          if(special[j] == ':' && peekchar() == '=')
-            special[++j] = getchar();
-          else if(special[j] == '<' && (peekchar() == '>' || peekchar() == '='))
-            special[++j] = getchar();
-          else if(special[j] == '>' && peekchar() == '=')
-            special[++j] = getchar();
-          else if(special[j] == '.' && peekchar() == '.')
-            special[++j] = getchar();
+      c = peekchar();
+      cclass = CHARCLASS[c];
+        if(c != EOF && cclass == SPECIAL) {
+          sToken[j] = getchar();
+          if(sToken[j] == ':' && peekchar() == '=')
+            sToken[++j] = getchar();
+          else if(sToken[j] == '<' && (peekchar() == '>' || peekchar() == '='))
+            sToken[++j] = getchar();
+          else if(sToken[j] == '>' && peekchar() == '=')
+            sToken[++j] = getchar();
+          else if(sToken[j] == '.' && peekchar() == '.')
+            sToken[++j] = getchar();
           j++;
           break;
         }
         else break;
       
     }
-    special[j] = '\0';
+    sToken[j] = '\0';
 
     /* Delimeters */
     int i;
     for(i = 0; i <= 7; i++) {
-      if(strcmp(special,delimiters[i]) == 0) {
+      if(strcmp(sToken,delimiters[i]) == 0) {
         tok->tokentype = DELIMITER;
         tok->whichval = i + 1;
         return tok;
