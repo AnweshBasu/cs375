@@ -67,11 +67,10 @@ char* reservedWords[] = { "array", "begin", "case", "const", "do",
 /* Skip blanks and whitespace.  Expand this function to skip comments too. */
 void skipblanks ()
 {
-    int c;
-    int d;
+    int c, d;
     while (c = peekchar() != EOF) {
       if ((c == ' ' || c == '\n' || c == '\t')) {
-        getchar();
+        c = getchar();
       } 
       else if (c =='{') {
         getchar();
@@ -82,22 +81,25 @@ void skipblanks ()
         }
         getchar();
       }
-      else if ((c == '(') && (d = peek2char() == '*')) {
+		    
+      else if ((c == '(') && (d = peek2char() != EOF && d == '*')) {
         getchar(); 
         getchar();
         c = peekchar();
         d = peek2char();
         while (c != EOF && d!= EOF && !(c=='*' && d==')')) {
           getchar();
-          getchar();
           c = peekchar();
           d = peek2char();
         } 
         getchar(); 
         getchar();
+      } 
+      else {
+        break;
       }
-    }
   }
+}
 
 TOKEN getReservedWordTok(int val, TOKEN tok) {
 	tok->tokentype = RESERVED;
