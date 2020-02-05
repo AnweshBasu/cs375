@@ -146,7 +146,7 @@ TOKEN identifier (TOKEN tok)
   // check if it is a word operator
   for (count = 13; count <= 18 ; count++)
   {
-    if (strcmp(var, operators[count]) == 0)
+    if (strcmp(variable, operators[count]) == 0)
     {
       tok->tokentype = OPERATOR;
       tok->whichval = count+1;
