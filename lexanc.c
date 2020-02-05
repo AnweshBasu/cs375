@@ -120,14 +120,14 @@ TOKEN getStringTok(char word[], TOKEN tok) {
 
 TOKEN getIntegerTok(int val, TOKEN tok) {
 	tok->tokentype = NUMBERTOK;
-	tok->datatype = INTEGER;
+	tok->basicdt = INTEGER;
 	tok->intval = val;
 	return tok;
 }
 
 TOKEN getRealTok(double val, TOKEN tok) {
 	tok->tokentype = NUMBERTOK;
-	tok->datatype = REAL;
+	tok->basicdt = REAL;
 	tok->realval = val;
 	return tok;
 }
