@@ -193,19 +193,13 @@ TOKEN identifier (TOKEN tok)
 
 TOKEN getstring (TOKEN tok)
 {
+  getchar();
   int c, d,  count, size = 0;
   char string[15];
-  while ( (c = peekchar()) != EOF && (c != '\n') && size < 16) 
+  while ( (c = peekchar()) != EOF && c != '\n' && c != '\t' && size < 16) 
   {
-    if (size == 0)
-    {
-      if (c == "'")
-      {
-        getchar();  
-      }
-    }  
     d = peek2char(); 
-    if ((c == "'") && (d != EOF && d != "'"))
+    if ((c == "\'") && (d != EOF && d != "\'"))
     {
       break;
     }
@@ -220,6 +214,7 @@ TOKEN getstring (TOKEN tok)
   strcpy(tok->stringval, string);
   return tok;   
 }
+
 
 
 
