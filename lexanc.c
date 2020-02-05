@@ -240,11 +240,15 @@ TOKEN special (TOKEN tok)
         if(c = peekchar() && c!= EOF && CHARCLASS[c] == SPECIAL) {
           special[j] = getchar();
           if(d = peekchar() != EOF) {
+		  c = special[j];
+		  
             if ((c == ":" && d == "=") || (c == "<" && (d == ">" || d == "=")) || 
                 (c == ">" && d == "=") || (c == "." && d == ".")) 
             {
-              special[j] = getchar();
               j += 1;
+	      special[j] = getchar();
+              j += 1;
+	      break;  
             }
           }
         else break;
