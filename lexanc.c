@@ -155,11 +155,13 @@ TOKEN identifier (TOKEN tok)
 {
   int  c, count, size = 0;    
   char variable[15];
-  while ( (c = peekchar()) != EOF
-          && (size < 15) &&(CHARCLASS[c] == ALPHA || CHARCLASS[c] == NUMERIC)) 
+  while ( (c = peekchar()) != EOF &&(CHARCLASS[c] == ALPHA || CHARCLASS[c] == NUMERIC)) 
   {
     variable[size] = getchar();
     size += 1;
+  }
+  if (size > 15){
+  	size = 15;
   }
   variable[size] = '\0';
   // check if it is a word operator
