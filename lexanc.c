@@ -191,7 +191,7 @@ TOKEN identifier (TOKEN tok)
 TOKEN getstring (TOKEN tok)
 {
 	int c, d, e, size = 0;
-	char word[15];
+	char string[15];
 	while ((c = peekchar()) != EOF && size < 16) {
 		if (size == 0)
 		{
@@ -206,7 +206,7 @@ TOKEN getstring (TOKEN tok)
 				getchar();
 			}
 		}
-		word[size] = c;
+		string[size] = c;
 		size ++;
 	}
 
