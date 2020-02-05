@@ -195,33 +195,35 @@ TOKEN identifier (TOKEN tok)
 
 TOKEN getstring (TOKEN tok)
 {
-	getchar();
-	int c, d, e, size = 0;
-	char string[16];
-	while ((c = peekchar()) != EOF && size < 15) {
-		e = peek2char();
-		d = getchar();
-		if( d == '\'') {
-			if(e != EOF && e != '\''){
-				break;
-			} else {
-				getchar();
-			}
-		}
-		string[size] = c;
-		size ++;
-	}
-	if (size >= 15) {
-		while (!((c = peekchar()) == '\'' && (d = peek2char()) != '\''))
-		{
-		    getchar();
-		}
-	}
-	string[size] = '\0';
 	
-	tok->tokentype = STRINGTOK;
-	strcpy(tok->stringval, string);
-	return tok; 
+	getchar();
+    char tokenWord[16];
+    char c;
+    char secondC;
+    int index = 0;
+    while (!((c = peekchar()) == '\'' && (secondC = peek2char()) != '\'') &&
+           index < 15)
+    {
+        tokenWord[index] = c;
+        if (c == '\'' && secondC == '\'')
+        {
+            getchar();
+        }
+        getchar();
+        index++;
+    }
+    if (index == 15)
+    {
+        while (!((c = peekchar()) == '\'' && (secondC = peek2char()) != '\''))
+        {
+            getchar();
+        }
+    }
+    getchar();
+    tokenWord[index] = '\0';
+    tok->tokentype = STRINGTOK;
+    strcpy(tok->tokenval.tokenstring, tokenWord);
+    return tok;
 
 }
 
