@@ -207,6 +207,10 @@ TOKEN getstring (TOKEN tok)
 		size ++;
 	}
 	string[size] = '\0';
+	if (size == 15) {
+		while ((c = peekchar()) != EOF && c != "\'")
+			getchar();
+	}
 	tok->tokentype = STRINGTOK;
 	strcpy(tok->stringval, string);
 	return tok; 
