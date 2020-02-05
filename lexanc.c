@@ -231,7 +231,7 @@ TOKEN getstring (TOKEN tok)
 
 
 TOKEN special (TOKEN tok)
-     {
+    {
 
     char special[3];
       int j;
@@ -241,13 +241,7 @@ TOKEN special (TOKEN tok)
           special[j] = getchar();
           c = special[j];
           d = peekchar();
-          if(c == ':' && d == '=')
-            special[++j] = getchar();
-          else if(c == '<' && (d == '>' || d == '='))
-            special[++j] = getchar();
-          else if(c == '>' && d == '=')
-            special[++j] = getchar();
-          else if(c == '.' && d == '.')
+          if(c == ':' && d == '=') || (c == '<' && (d == '>' || d == '=')) || (c == '>' && d == '=') || (c == '.' && d == '.')
             special[++j] = getchar();
           j++;
           break;
@@ -267,6 +261,7 @@ TOKEN special (TOKEN tok)
       }
     }
   }
+
 
 	
 TOKEN handleRealError(TOKEN tok){
