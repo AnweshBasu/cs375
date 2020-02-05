@@ -199,8 +199,8 @@ TOKEN getstring (TOKEN tok)
   while ( (c = peekchar()) != EOF && c != '\n' && c != '\t' && size < 16) 
   {
     d = peek2char(); 
-    if ((c == "\'") {
-      if (d != EOF && d != "\'"))
+    if (c == "\'") {
+      if (d != EOF && d != "\'")
       {
         break;
       } 
