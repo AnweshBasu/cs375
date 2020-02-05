@@ -218,7 +218,7 @@ TOKEN getstring (TOKEN tok)
         }
     }
     getchar();
-    tokenWord[index] = '\0';
+    string[size] = '\0';
     tok->tokentype = STRINGTOK;
     strcpy(tok->tokenval.tokenstring, tokenWord);
     return tok;
