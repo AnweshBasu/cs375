@@ -203,7 +203,7 @@ TOKEN getstring (TOKEN tok)
     while (!((c = peekchar()) != EOF && c== '\'' && (d = peek2char()) != EOF && d !='\'') &&
            size < 15)
     {
-        if (c == '\'' && secondC == '\'')
+        if (c == '\'' && d == '\'')
         {
             getchar();
         }
@@ -220,7 +220,7 @@ TOKEN getstring (TOKEN tok)
     getchar();
     string[size] = '\0';
     tok->tokentype = STRINGTOK;
-    strcpy(tok->tokenval.tokenstring, tokenWord);
+    strcpy(tok->tokenval.tokenstring, string);
     return tok;
 
 }
