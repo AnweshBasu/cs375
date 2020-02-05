@@ -231,51 +231,55 @@ TOKEN getstring (TOKEN tok)
 
 
 TOKEN special (TOKEN tok)
-{
-	int c, d, size = 0, flag = 0, val = 0, i;
-	char oper[3];
+  {
 
-	while ( (c = peekchar()) != EOF
-			&& CHARCLASS[c] == SPECIAL) {
-		c = getchar();	
-		oper[size] = c;
-		size ++;
+    char sToken[3];
+      int j;
+    char cclass;
+    for(j = 0; j < 3; j++) {
+      c = peekchar();
+      cclass = CHARCLASS[c];
 
-		d = peekchar();
-		oper[size] = d;	
-		size ++;
-		
-		oper[size] = '\0';
+        /* Handle cases where two delimiters might be next to each other, basically only add one character 
+           into the string except for the special cases of 2 character tokens, and just pass a string sTokenfer
+           large enough to store 2 characters and a null terminator */
+        if(cclass != ALPHA && cclass != NUMERIC && c!= EOF && !isWhiteSpace(c)) {
+          sToken[j] = getchar();
+          if(sToken[j] == ':' && peekchar() == '=')
+            sToken[++j] = getchar();
+          else if(sToken[j] == '<' && (peekchar() == '>' || peekchar() == '='))
+            sToken[++j] = getchar();
+          else if(sToken[j] == '>' && peekchar() == '=')
+            sToken[++j] = getchar();
+          else if(sToken[j] == '.' && peekchar() == '.')
+            sToken[++j] = getchar();
+          j++;
+          break;
+        }
+        else break;
+      
+    }
+    sToken[i] = '\0';
 
-		for(i = 0; i <= 12; i ++){
-			if(strcmp(oper, operators[i]) == 0) {
-				return getOperatorTok(i + 1, tok);
-			}
-		}
-		
-		for(i = 0; i < 8; i ++){
-			if(strcmp(oper, delimiters[i]) == 0) {
-				return getDelimiterTok(i + 1, tok);
-			}
-		}
-		
-		oper[size - 1] = '\0';
+    /* Delimeters */
+    int i;
+    for(i = 0; i < NUM_DELIMETERS; i++) {
+      if(strcmp(sToken,delimeters[i]) == 0) {
+        tok->tokentype = DELIMITER;
+        tok->whichval = i + 1;
+        return tok;
+      }
+    }
 
-		for(i = 0; i < 19; i ++){
-			if(strcmp(oper, operators[i]) == 0) {
-				return getOperatorTok(i + 1, tok);
-			}
-		}
-		
-		
-		for(i = 0; i < 8; i ++){
-			if(strcmp(oper, delimiters[i]) == 0) {
-				return getDelimiterTok(i + 1, tok);
-			}
-		}
-	}
-	
-}
+    /* Operators */
+    for(i = 0; i < NUM_SPECIAL_OPERATORS; i++) {
+      if(strcmp(sToken,specialOps[i]) == 0) {
+        tok->tokentype = OPERATOR;
+        tok->whichval = i + 1;
+        return tok;
+      }
+    }
+  }
 
 TOKEN handleRealError(TOKEN tok){
 	printf("Real number out of range \n");
