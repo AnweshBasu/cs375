@@ -220,7 +220,7 @@ TOKEN getstring (TOKEN tok)
     getchar();
     string[size] = '\0';
     tok->tokentype = STRINGTOK;
-    strcpy(tok->tokenval.tokenstring, string);
+    strcpy(tok->stringval, string);
     return tok;
 
 }
