@@ -202,7 +202,14 @@ TOKEN getstring (TOKEN tok)
 		      {
 			getchar();  
 		      }
-		    }  
+		    }
+		if( c = peekchar() == '\'') {
+			if((d = peek2char()) != EOF && d != '\''){
+				break;
+			} else {
+				getchar();
+			}
+		}
 		word[size] = getchar();
 		size ++;
 	}
