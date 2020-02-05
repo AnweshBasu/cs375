@@ -73,7 +73,6 @@ void skipblanks ()
 		if (c == ' ' || c == '\n' || c == '\t') {
 			getchar();
 		} else if (c == '{'){
-			c = peekchar();
 			while (c = peekchar() != EOF && (c != '}')) {
 				getchar();
 			}
