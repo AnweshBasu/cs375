@@ -191,8 +191,8 @@ TOKEN identifier (TOKEN tok)
 TOKEN getstring (TOKEN tok)
 {
 	int c, d, e, size = 0;
-	char word[256];
-	while ((c = peekchar()) != EOF ) {
+	char word[15];
+	while ((c = peekchar()) != EOF && size < 16) {
 		if (size == 0)
 		{
 	      		getchar();  
@@ -210,11 +210,10 @@ TOKEN getstring (TOKEN tok)
 		size ++;
 	}
 
-	if (size >= 16)
-		word[15] = '\0';
-	else
-		word[size] = '\0';
-	return getStringTok(word, tok);	
+	string[size] = '\0';
+	tok->tokentype = STRINGTOK;
+	strcpy(tok->stringval, string);
+	return tok; 
 
 }
 
