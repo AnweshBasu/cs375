@@ -146,7 +146,7 @@ TOKEN identifier (TOKEN tok)
   // check if it is a word operator
   for (count = 13; count <= 18 ; count++)
   {
-    if (strcmp(identifier, operators[count]) == 0)
+    if (strcmp(var, operators[count]) == 0)
     {
       tok->tokentype = OPERATOR;
       tok->whichval = count+1;
@@ -157,7 +157,7 @@ TOKEN identifier (TOKEN tok)
   //check if it is a reserved Word
   for (count = 0;  count <= 28; count++)
   {
-    if (strcmp(identifier, reservedWords[count]) == 0)
+    if (strcmp(variable, reservedWords[count]) == 0)
     {
       tok->tokentype = RESERVED;
       tok->whichval = count+1;
@@ -166,7 +166,7 @@ TOKEN identifier (TOKEN tok)
   }
   //it is an identifier
   tok->tokentype = IDENTIFIERTOK;
-  strcpy(tok->stringval, identifier);
+  strcpy(tok->stringval, variable);
   return tok;
 
 
