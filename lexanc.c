@@ -235,7 +235,7 @@ TOKEN special (TOKEN tok)
 
     char special[3];
       int j;
-    char c;
+    char c, d;
     for(j = 0; j < 3; j++) {
         if(c = peekchar() && c!= EOF && CHARCLASS[c] == SPECIAL) {
           special[j] = getchar();
@@ -262,6 +262,7 @@ TOKEN special (TOKEN tok)
       }
     }
   }
+}
 	
 TOKEN handleRealError(TOKEN tok){
 	printf("Real number out of range \n");
