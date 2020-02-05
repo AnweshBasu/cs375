@@ -243,7 +243,7 @@ TOKEN special (TOKEN tok)
         /* Handle cases where two delimiters might be next to each other, basically only add one character 
            into the string except for the special cases of 2 character tokens, and just pass a string sTokenfer
            large enough to store 2 characters and a null terminator */
-        if(c != EOF && cclass == SPECIAL {
+        if(c != EOF && cclass == SPECIAL) {
           sToken[j] = getchar();
           if(sToken[j] == ':' && peekchar() == '=')
             sToken[++j] = getchar();
