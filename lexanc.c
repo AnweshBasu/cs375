@@ -196,7 +196,7 @@ TOKEN getstring (TOKEN tok)
 	getchar();
 	int c, d, size = 0;
 	char word[256];
-	while ((c = peekchar()) != EOF && !(c == '\n' || c=='\t') ) {
+	while ((c = peekchar()) != EOF) {
 		c = getchar();
 		if( c == '\'') {
 			if((d = peekchar()) != EOF && d != '\''){
