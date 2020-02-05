@@ -70,28 +70,39 @@ void skipblanks ()
 	int c;
 	int d;
 	while ((c = peekchar()) != EOF ){
-		if (c == ' ' || c == '\n' || c == '\t') {
+		if (c == ' ' || c == '\n' || c == '\t') 
+		{
 			getchar();
-		} else if (c == '{'){
+		} 
+		else if (c == '{')
+		{
 			getchar();
 			c = peekchar();
-			while (c != EOF && (c != '}')) {
+			while (c != EOF && (c != '}')) 
+			{
 				getchar();
 				c = peekchar();
 			}
 			getchar();
-		} else if (c == '(' && (d = peek2char()) != EOF && d == '*'){
+		} 
+		else if (c == '(' && (d = peek2char()) != EOF && d == '*')
+		{
 			getchar();
 			getchar(); 
 			c = peekchar();
         		d = peek2char();
-			while (c != EOF && d != EOF && !(c == '*' && d== ')')) {
+			while (c != EOF && d != EOF && !(c == '*' && d== ')')) 
+			{
 				getchar();
 				c = peekchar();
         			d = peek2char();
 			}
 			getchar();
 			getchar();  
+		} 
+		else 
+		{
+			break;
 		}
 	}
 }
