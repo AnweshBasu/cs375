@@ -156,7 +156,7 @@ TOKEN identifier (TOKEN tok)
   int  c, count, size = 0;    
   char variable[15];
   while ( (c = peekchar()) != EOF
-          && (size < 16) &&(CHARCLASS[c] == ALPHA || CHARCLASS[c] == NUMERIC)) 
+          && (size < 15) &&(CHARCLASS[c] == ALPHA || CHARCLASS[c] == NUMERIC)) 
   {
     variable[size] = getchar();
     size += 1;
