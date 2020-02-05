@@ -92,8 +92,6 @@ void skipblanks ()
 			}
 			getchar();
 			getchar();  
-		} else {
-			break;
 		}
 	}
 }
