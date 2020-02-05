@@ -203,7 +203,7 @@ TOKEN getstring (TOKEN tok)
 			getchar();  
 		      }
 		    }
-		c = peekchar();
+		c = getchar();
 		d = peek2char();
 		if( c == '\'') {
 			if(d != EOF && d != '\''){
@@ -212,7 +212,7 @@ TOKEN getstring (TOKEN tok)
 				getchar();
 			}
 		}
-		word[size] = getchar();
+		word[size] = c;
 		size ++;
 	}
 
