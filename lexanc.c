@@ -196,23 +196,21 @@ TOKEN identifier (TOKEN tok)
 TOKEN getstring (TOKEN tok)
 {
 	
-	getchar();
-    char tokenWord[16];
-    char c;
-    char secondC;
-    int index = 0;
-    while (!((c = peekchar()) == '\'' && (secondC = peek2char()) != '\'') &&
-           index < 15)
+    getchar();
+    char string[16];
+    int c, d, size = 0;
+	
+    while (!((c = peekchar()) != EOF && c== '\'' && (d = peek2char()) != EOF && d !='\'') &&
+           size < 15)
     {
-        tokenWord[index] = c;
         if (c == '\'' && secondC == '\'')
         {
             getchar();
         }
-        getchar();
-        index++;
+        string[size] = getchar();
+        size+=1;
     }
-    if (index == 15)
+    if (index >= 15)
     {
         while (!((c = peekchar()) == '\'' && (secondC = peek2char()) != '\''))
         {
