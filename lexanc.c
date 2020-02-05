@@ -1,3 +1,11 @@
+Skip to content
+ ramjanarthan / cs375
+Code Issues 0 Pull requests 0 Projects 0 Actions Wiki Security Pulse Community
+cs375/Assignment1/lexanc.c
+@ramjanarthan ramjanarthan Finish Assignment 1
+b029ed2 on Sep 25, 2017
+387 lines (322 sloc)  7.47 KB
+  
 /* lex1.c         14 Feb 01; 31 May 12       */
 
 /*
@@ -67,41 +75,22 @@ char* reservedWords[] = { "array", "begin", "case", "const", "do",
 /* Skip blanks and whitespace.  Expand this function to skip comments too. */
 void skipblanks ()
 {
-	int c;
-	int d;
+	int c, d;
 	while ((c = peekchar()) != EOF ){
-		if (c == ' ' || c == '\n' || c == '\t') 
-		{
+		if (c == ' ' || c == '\n' || c == '\t') {
 			getchar();
-		} 
-		else if (c == '{')
-		{
-			getchar();
-			c = peekchar();
-			while (c != EOF && (c != '}')) 
-			{
+		} else if (c == '{'){
+			while ((c = peekchar()) != EOF && (c != '}'))
 				getchar();
-				c = peekchar();
-			}
 			getchar();
-		} 
-		else if (c == '(' && (d = peek2char()) != EOF && d == '*')
-		{
+		} else if (c == '(' && (d = peek2char()) != EOF && d == '*'){
 			getchar();
-			getchar(); 
-			c = peekchar();
-        		d = peek2char();
-			while (c != EOF && d != EOF && !(c == '*' && d== ')')) 
-			{
+			getchar();  //Skip over '(' and '*'
+			while ((c = peekchar()) !=  EOF && (d = peek2char()) != EOF && !(c == '*' && d== ')'))
 				getchar();
-				c = peekchar();
-        			d = peek2char();
-			}
 			getchar();
-			getchar();  
-		} 
-		else 
-		{
+			getchar();  //Skip over '*' and ')'
+		} else {
 			break;
 		}
 	}
@@ -139,21 +128,21 @@ TOKEN getStringTok(char word[], TOKEN tok) {
 
 TOKEN getIntegerTok(int val, TOKEN tok) {
 	tok->tokentype = NUMBERTOK;
-	tok->basicdt = INTEGER;
+	tok->datatype = INTEGER;
 	tok->intval = val;
 	return tok;
 }
 
 TOKEN getRealTok(double val, TOKEN tok) {
 	tok->tokentype = NUMBERTOK;
-	tok->basicdt = REAL;
+	tok->datatype = REAL;
 	tok->realval = val;
 	return tok;
 }
 /* Get identifiers and reserved words */
 TOKEN identifier (TOKEN tok)
 {
-  int c, i, size = 0;
+	int c, i, size = 0;
 	char word[256];
 	while ( (c = peekchar()) != EOF
 			&& (CHARCLASS[c] == ALPHA || CHARCLASS[c] == NUMERIC))
@@ -186,46 +175,37 @@ TOKEN identifier (TOKEN tok)
 	}
 
 	return getIdentifierTok(word, tok); 
-
 }
 
 TOKEN getstring (TOKEN tok)
 {
-	
-    getchar(); //starting '
-    char string[16];
-    int c, d, size = 0;
-	
-    while (!((c = peekchar()) != EOF && c== '\'' && (d = peek2char()) != EOF && d !='\'') &&
-           size < 15)
-    {
-        if (c == '\'' && d == '\'') //escaped '
-        {
-            getchar();
-        }
-        string[size] = getchar();
-        size+=1;
-    }
-    if (index >= 15) //get all extra characters
-    {
-        while (!((c = peekchar()) != EOF && c == '\'' && (d = peek2char()) != EOF && d!= '\''))
-        {
-            getchar();
-        }
-    }
-    getchar(); //ending '
-    string[size] = '\0';
-	
-    tok->tokentype = STRINGTOK;
-    strcpy(tok->stringval, string);
-    return tok;
+	getchar();
+	int c, d, size = 0;
+	char word[256];
+	while ((c = peekchar()) != EOF && !(c == '\n' || c=='\t') ) {
+		c = getchar();
+		if( c == '\'') {
+			if((d = peekchar()) != EOF && d != '\''){
+				break;
+			} else {
+				getchar();
+			}
+		}
+		word[size] = c;
+		size ++;
+	}
+
+	if (size >= 16)
+		word[15] = '\0';
+	else
+		word[size] = '\0';
+	return getStringTok(word, tok);	
 
 }
 
 
 TOKEN special (TOKEN tok)
-    {
-
+{
 	int c, d, size = 0, flag = 0, val = 0, i;
 	char oper[3];
 
@@ -286,11 +266,8 @@ TOKEN special (TOKEN tok)
 		}
 	}
 	
-  
-  }
+}
 
-
-	
 TOKEN handleRealError(TOKEN tok){
 	printf("Real number out of range \n");
 	return getRealTok(0.0, tok);
@@ -414,3 +391,15 @@ TOKEN number (TOKEN tok)
 		return getIntegerTok(num, tok);
 	}
 }
+© 2020 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
