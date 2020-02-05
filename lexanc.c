@@ -265,7 +265,7 @@ TOKEN special (TOKEN tok)
     if (strcmp(identifier, delimiters[count]) == 0)
     {
       tok->tokentype = DELIMITER;
-      tok->whichval = count+1;
+      tok->whichval = 4;
       return tok;
     }
   }
