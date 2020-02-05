@@ -154,17 +154,14 @@ TOKEN getRealTok(double val, TOKEN tok) {
 TOKEN identifier (TOKEN tok)
 {
   int  c, count, size = 0;    
-  char variable[16];
-  while ( (c = peekchar()) != EOF &&(CHARCLASS[c] == ALPHA || CHARCLASS[c] == NUMERIC) && size < 15) 
+  char variable[256];
+  while ( (c = peekchar()) != EOF &&(CHARCLASS[c] == ALPHA || CHARCLASS[c] == NUMERIC) ) 
   {
     variable[size] = getchar();
     size += 1;
   }
   if (size >= 15){
-  	 while ((c = peekchar()) && CHARCLASS[c] == ALPHA || CHARCLASS[c] == NUMERIC)
-        {
-            getchar();
-        }
+  	 size = 15;
   }
   variable[size] = '\0';
   // check if it is a word operator
