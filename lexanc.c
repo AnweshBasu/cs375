@@ -82,9 +82,14 @@ void skipblanks ()
 			getchar();
 		} else if (c == '(' && (d = peek2char()) != EOF && d == '*'){
 			getchar();
-			getchar();  //Skip over '(' and '*'
-			while ((c = peekchar()) !=  EOF && (d = peek2char()) != EOF && !(c == '*' && d== ')'))
+			getchar(); 
+			c = peekchar();
+        		d = peek2char();
+			while ((c != EOF && d != EOF && !(c == '*' && d== ')')){
 				getchar();
+				c = peekchar();
+        			d = peek2char();
+			}
 			getchar();
 			getchar();  //Skip over '*' and ')'
 		} else {
