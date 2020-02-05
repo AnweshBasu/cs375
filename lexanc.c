@@ -69,11 +69,11 @@ void skipblanks ()
 {
 	int c; 
 	int d;
-	while (c = peekchar() != EOF ){
+	while ((c = peekchar()) != EOF ){
 		if (c == ' ' || c == '\n' || c == '\t') {
 			getchar();
 		} else if (c == '{'){
-			while (c = peekchar() != EOF && (c != '}')) {
+			while ((c = peekchar()) != EOF && (c != '}')) {
 				getchar();
 			}
 			getchar();
