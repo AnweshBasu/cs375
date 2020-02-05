@@ -197,8 +197,8 @@ TOKEN getstring (TOKEN tok)
 {
 	getchar();
 	int c, d, e, size = 0;
-	char string[256];
-	while ((c = peekchar()) != EOF) {
+	char string[16];
+	while ((c = peekchar()) != EOF && size < 15) {
 		e = peek2char();
 		d = getchar();
 		if( d == '\'') {
@@ -211,8 +211,11 @@ TOKEN getstring (TOKEN tok)
 		string[size] = c;
 		size ++;
 	}
-	if (size > 15) {
-		size = 15;
+	if (size >= 15) {
+		while (!((c = peekchar()) == '\'' && (secondC = peek2char()) != '\''))
+		{
+		    getchar();
+		}
 	}
 	string[size] = '\0';
 	
