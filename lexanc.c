@@ -235,7 +235,7 @@ TOKEN special (TOKEN tok)
 
     char sToken[3];
       int j;
-    char cclass;
+    char c, cclass;
     for(j = 0; j < 3; j++) {
       c = peekchar();
       cclass = CHARCLASS[c];
@@ -259,12 +259,12 @@ TOKEN special (TOKEN tok)
         else break;
       
     }
-    sToken[i] = '\0';
+    sToken[j] = '\0';
 
     /* Delimeters */
     int i;
-    for(i = 0; i < NUM_DELIMETERS; i++) {
-      if(strcmp(sToken,delimeters[i]) == 0) {
+    for(i = 0; i <= 7; i++) {
+      if(strcmp(sToken,delimiters[i]) == 0) {
         tok->tokentype = DELIMITER;
         tok->whichval = i + 1;
         return tok;
@@ -272,8 +272,8 @@ TOKEN special (TOKEN tok)
     }
 
     /* Operators */
-    for(i = 0; i < NUM_SPECIAL_OPERATORS; i++) {
-      if(strcmp(sToken,specialOps[i]) == 0) {
+    for(i = 0; i <= 12; i++) {
+      if(strcmp(sToken,operators[i]) == 0) {
         tok->tokentype = OPERATOR;
         tok->whichval = i + 1;
         return tok;
