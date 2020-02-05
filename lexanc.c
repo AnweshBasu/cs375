@@ -1,38 +1,25 @@
- 
-/* lex1.c         14 Feb 01; 31 May 12       */
-
-/*
-Name: S. Ram Janarthana Raja	
-UT EID: rs53992
-*/
-
+/* lex1.c         14 Feb 01; 31 May 12; 11 Jan 18       */
 
 /* This file contains code stubs for the lexical analyzer.
    Rename this file to be lexanc.c and fill in the stubs.    */
 
-/* Copyright (c) 2001 Gordon S. Novak Jr. and
+/* Copyright (c) 2018 Gordon S. Novak Jr. and
    The University of Texas at Austin. */
 
 /*
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-utput);
-   GNU General Public License for more details.
-a	if ( num > INT_MAX ) {
-			exponent ++;
-			intError = 1;
-		} if ( num > INT_MAX ) {
-			exponent ++;
-			intError = 1;
-		} 
-   You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 #include <stdio.h>
 #include <ctype.h>
@@ -50,18 +37,18 @@ a	if ( num > INT_MAX ) {
    12345 123    345  357
  */
 
-char* operators[] = { "+", "-", "*", "/", ":=", "=", "<>", "<",
-	"<=", ">=", ">", "^", ".", "and", "or", "not",
-	"div", "mod", "in" };
+const char* operators[] = { '+', '-', '*', '/', ':=', '=', '<>', '<',
+  '<=', '>=', '>', '^', '.', 'and', 'or', 'not',
+  'div', 'mod', 'in' };
 
-char* delimiters[] = { ",", ";", ":", "(", ")", "[", "]", ".."};
+const char* delimiters[] = { ',', ';', ':', '(', ')', '[', ']', '..'};
 
-char* reservedWords[] = { "array", "begin", "case", "const", "do",
-	"downto", "else", "end", "file", "for", 
-	"function", "goto", "if", "label", "nil", 
-	"of", "packed", "procedure", "program", "record",
-	"repeat", "set", "then", "to", "type", "until",
-	"var", "while", "with"};
+const char* reservedWords[] = { 'array', 'begin', 'case', 'const', 'do',
+  'downto', 'else', 'end', 'file', 'for', 
+  'function', 'goto', 'if', 'label', 'nil', 
+  'of', 'packed', 'procedure', 'program', 'record',
+  'repeat', 'set', 'then', 'to', 'type', 'until',
+  'var', 'while', 'with'};
 
 
 
@@ -78,11 +65,11 @@ void skipblanks ()
 			getchar();
 		} else if (c == '(' && (d = peek2char()) != EOF && d == '*'){
 			getchar();
-			getchar();  //Skip over '(' and '*'
+			getchar();  
 			while ((c = peekchar()) !=  EOF && (d = peek2char()) != EOF && !(c == '*' && d== ')'))
 				getchar();
 			getchar();
-			getchar();  //Skip over '*' and ')'
+			getchar(); 
 		} else {
 			break;
 		}
@@ -135,46 +122,51 @@ TOKEN getRealTok(double val, TOKEN tok) {
 /* Get identifiers and reserved words */
 TOKEN identifier (TOKEN tok)
 {
-	int c, i, size = 0;
-	char word[256];
-	while ( (c = peekchar()) != EOF
-			&& (CHARCLASS[c] == ALPHA || CHARCLASS[c] == NUMERIC))
-	{ 
-		c = getchar();
-		word[size] = c;
-		size++;
-	}
+     int  c, count, size = 0;    
+  char variable[256];
+  while ( (c = peekchar()) != EOF &&(CHARCLASS[c] == ALPHA || CHARCLASS[c] == NUMERIC) ) 
+  {
+    variable[size] = getchar();
+    size += 1;
+  }
+  if (size >= 15){
+     size = 15;
+  }
+  variable[size] = '\0';
+  // check if it is a word operator
+  for (count = 13; count <= 18 ; count++)
+  {
+    if (strcmp(variable, operators[count]) == 0)
+    {
+      tok->tokentype = OPERATOR;
+      tok->whichval = count+1;
+      return tok;
+    }
+  }
 
-	if (size >= 16)
-		word[15] = '\0';
-	else
-		word[size] = '\0';
+  //check if it is a reserved Word
+  for (count = 0;  count <= 28; count++)
+  {
+    if (strcmp(variable, reservedWords[count]) == 0)
+    {
+      tok->tokentype = RESERVED;
+      tok->whichval = count+1;
+      return tok;
+    }
+  }
+  //it is an identifier
+  tok->tokentype = IDENTIFIERTOK;
+  strcpy(tok->stringval, variable);
+  return tok;
 
 
-	for (i = 0; i < 29; i++)
-	{
-		if (strcmp(word, reservedWords[i]) == 0)
-		{
-			return getReservedWordTok(i + 1, tok);
-		}
-	}
-
-	for (i = 13; i < 19 ; i++)
-	{
-		if (strcmp(word, operators[i]) == 0)
-		{
-			return getOperatorTok(i + 1, tok);
-		}
-	}
-
-	return getIdentifierTok(word, tok); 
 }
 
 TOKEN getstring (TOKEN tok)
 {
 	getchar();
 	int c, d, size = 0;
-	char word[256];
+	char word[100];
 	while ((c = peekchar()) != EOF && !(c == '\n' || c=='\t') ) {
 		c = getchar();
 		if( c == '\'') {
