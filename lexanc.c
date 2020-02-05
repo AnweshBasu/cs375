@@ -249,46 +249,29 @@ TOKEN special (TOKEN tok)
 
 		for(i = 0; i <= 12; i ++){
 			if(strcmp(oper, operators[i]) == 0) {
-				flag = 1;
-				break;
+				return getOperatorTok(i + 1, tok);
 			}
 		}
-		if (flag == 1) {
-			getchar();
-			return getOperatorTok(i + 1, tok);
-		} 
 		
 		for(i = 0; i < 8; i ++){
 			if(strcmp(oper, delimiters[i]) == 0) {
-				flag = 1;
-				break;
+				return getDelimiterTok(i + 1, tok);
 			}
-		}
-		if (flag == 1) {
-			getchar();
-			return getDelimiterTok(i + 1, tok);
 		}
 		
 		oper[size - 1] = '\0';
 
 		for(i = 0; i < 19; i ++){
 			if(strcmp(oper, operators[i]) == 0) {
-				flag = 1;
-				break;
+				return getOperatorTok(i + 1, tok);
 			}
 		}
-		if (flag == 1) {
-			return getOperatorTok(i + 1, tok);
-		} 
+		
 		
 		for(i = 0; i < 8; i ++){
 			if(strcmp(oper, delimiters[i]) == 0) {
-				flag = 1;
-				break;
+				return getDelimiterTok(i + 1, tok);
 			}
-		}
-		if (flag == 1) {
-			return getDelimiterTok(i + 1, tok);
 		}
 	}
 	
