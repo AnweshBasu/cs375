@@ -212,7 +212,7 @@ TOKEN getstring (TOKEN tok)
     }
     if (index >= 15)
     {
-        while (!((c = peekchar()) == '\'' && (secondC = peek2char()) != '\''))
+        while (!((c = peekchar()) == '\'' && (d = peek2char()) != '\''))
         {
             getchar();
         }
