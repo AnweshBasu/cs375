@@ -243,8 +243,8 @@ TOKEN special (TOKEN tok)
             if ((c == ":" && d == "=") || (c == "<" && (d == ">" || d == "=")) || 
                 (c == ">" && d == "=") || (c == "." && d == ".")) 
             {
-              special[size] = getchar();
-              size += 1;
+              special[j] = getchar();
+              j += 1;
             }
           }
         else break;
