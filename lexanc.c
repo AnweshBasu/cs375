@@ -154,7 +154,7 @@ TOKEN getRealTok(double val, TOKEN tok) {
 TOKEN identifier (TOKEN tok)
 {
   int  c, count, size = 0;    
-  char variable[15];
+  char variable[256];
   while ( (c = peekchar()) != EOF &&(CHARCLASS[c] == ALPHA || CHARCLASS[c] == NUMERIC)) 
   {
     variable[size] = getchar();
