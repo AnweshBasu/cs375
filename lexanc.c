@@ -67,13 +67,18 @@ char* reservedWords[] = { "array", "begin", "case", "const", "do",
 /* Skip blanks and whitespace.  Expand this function to skip comments too. */
 void skipblanks ()
 {
-	int c, d;
-	while ((c = peekchar()) != EOF ){
+	int c; 
+	int d;
+	while (c = peekchar() != EOF ){
 		if (c == ' ' || c == '\n' || c == '\t') {
 			getchar();
 		} else if (c == '{'){
-			while ((c = peekchar()) != EOF && (c != '}'))
+			getchar();
+			c = peekchar();
+			while (c != EOF && (c != '}')) {
 				getchar();
+				c = peekchar();
+			}
 			getchar();
 		} else if (c == '(' && (d = peek2char()) != EOF && d == '*'){
 			getchar();
