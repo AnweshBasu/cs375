@@ -231,56 +231,38 @@ TOKEN getstring (TOKEN tok)
 
 
 TOKEN special (TOKEN tok)
-  {
+ {
 
-    char sToken[3];
+    char special[3];
       int j;
-    char c, cclass;
+    char c;
     for(j = 0; j < 3; j++) {
-      c = peekchar();
-      cclass = CHARCLASS[c];
-
-        /* Handle cases where two delimiters might be next to each other, basically only add one character 
-           into the string except for the special cases of 2 character tokens, and just pass a string sTokenfer
-           large enough to store 2 characters and a null terminator */
-        if(c != EOF && cclass == SPECIAL) {
-          sToken[j] = getchar();
-          if(sToken[j] == ':' && peekchar() == '=')
-            sToken[++j] = getchar();
-          else if(sToken[j] == '<' && (peekchar() == '>' || peekchar() == '='))
-            sToken[++j] = getchar();
-          else if(sToken[j] == '>' && peekchar() == '=')
-            sToken[++j] = getchar();
-          else if(sToken[j] == '.' && peekchar() == '.')
-            sToken[++j] = getchar();
-          j++;
-          break;
-        }
+        if(c = peekchar() && c!= EOF && CHARCLASS[c] == SPECIAL) {
+          special[j] = getchar();
+          if(d = peekchar() != EOF) {
+            if ((c == ":" && d == "=") || (c == "<" && (d == ">" || d == "=")) || 
+                (c == ">" && d == "=") || (c == "." && d == ".")) 
+            {
+              special[size] = getchar();
+              size += 1;
+            }
+          }
         else break;
       
     }
-    sToken[j] = '\0';
+    special[j] = '\0';
 
     /* Delimeters */
     int i;
     for(i = 0; i <= 7; i++) {
-      if(strcmp(sToken,delimiters[i]) == 0) {
+      if(strcmp(special,delimiters[i]) == 0) {
         tok->tokentype = DELIMITER;
         tok->whichval = i + 1;
         return tok;
       }
     }
-
-    /* Operators */
-    for(i = 0; i <= 12; i++) {
-      if(strcmp(sToken,operators[i]) == 0) {
-        tok->tokentype = OPERATOR;
-        tok->whichval = i + 1;
-        return tok;
-      }
-    }
   }
-
+	
 TOKEN handleRealError(TOKEN tok){
 	printf("Real number out of range \n");
 	return getRealTok(0.0, tok);
