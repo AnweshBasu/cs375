@@ -198,7 +198,7 @@ TOKEN getstring (TOKEN tok)
 	while ((c = peekchar()) != EOF) {
 		if (size == 0)
 		    {
-		      if (c == "'")
+		      if (c == "\'")
 		      {
 			getchar();  
 		      }
