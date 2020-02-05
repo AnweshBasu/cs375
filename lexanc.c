@@ -241,13 +241,13 @@ TOKEN special (TOKEN tok)
           special[j] = getchar();
           c = special[j];
           d = peekchar();
-          if(c == ':' && d == '=')
+          if(c == ':' && peekchar() == '=')
             special[++j] = getchar();
-          else if(c == '<' && (d == '>' || d == '='))
+          else if(special[j] == '<' && (peekchar() == '>' || peekchar() == '='))
             special[++j] = getchar();
-          else if(c == '>' && d == '=')
+          else if(special[j] == '>' && peekchar() == '=')
             special[++j] = getchar();
-          else if(c == '.' && d == '.')
+          else if(special[j] == '.' && peekchar() == '.')
             special[++j] = getchar();
           j++;
           break;
@@ -267,6 +267,7 @@ TOKEN special (TOKEN tok)
       }
     }
   }
+
 	
 TOKEN handleRealError(TOKEN tok){
 	printf("Real number out of range \n");
