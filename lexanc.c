@@ -195,11 +195,11 @@ TOKEN getstring (TOKEN tok)
 {
   int c, d,  count, size = 0;
   char string[15];
-  while ( (c = peekchar()) != EOF && c != '\n' && c != '\t' && size < 16) 
+  while ( (c = peekchar()) != EOF  && size < 16) 
   {
     if (size == 0)
     {
-      if (c == "'")
+      if (c == "\'")
       {
         getchar();  
       }
