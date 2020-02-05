@@ -67,26 +67,37 @@ char* reservedWords[] = { "array", "begin", "case", "const", "do",
 /* Skip blanks and whitespace.  Expand this function to skip comments too. */
 void skipblanks ()
 {
-	int c, d;
-	while ((c = peekchar()) != EOF ){
-		if (c == ' ' || c == '\n' || c == '\t') {
-			getchar();
-		} else if (c == '{'){
-			while ((c = peekchar()) != EOF && (c != '}'))
-				getchar();
-			getchar();
-		} else if (c == '(' && (d = peek2char()) != EOF && d == '*'){
-			getchar();
-			getchar();  //Skip over '(' and '*'
-			while ((c = peekchar()) !=  EOF && (d = peek2char()) != EOF && !(c == '*' && d== ')'))
-				getchar();
-			getchar();
-			getchar();  //Skip over '*' and ')'
-		} else {
-			break;
-		}
-	}
-}
+    int c;
+    int d;
+    while (c = peekchar() != EOF) {
+      if ((c == ' ' || c == '\n' || c == '\t')) {
+        getchar();
+      } 
+      else if (c =='{') {
+        getchar();
+        c = peekchar();
+        while ((c != EOF) && (c == '}')) {
+          getchar();
+          c = peekchar();
+        }
+        getchar();
+      }
+      else if ((c == '(') && (d = peek2char() == '*')) {
+        getchar(); 
+        getchar();
+        c = peekchar();
+        d = peek2char();
+        while (c != EOF && d!= EOF && !(c=='*' && d==')')) {
+          getchar();
+          getchar();
+          c = peekchar();
+          d = peek2char();
+        } 
+        getchar(); 
+        getchar();
+      }
+    }
+  }
 
 TOKEN getReservedWordTok(int val, TOKEN tok) {
 	tok->tokentype = RESERVED;
@@ -174,28 +185,32 @@ TOKEN identifier (TOKEN tok)
 
 TOKEN getstring (TOKEN tok)
 {
-	getchar();
-	int c, d, size = 0;
-	char word[256];
-	while ((c = peekchar()) != EOF && !(c == '\n' || c=='\t') ) {
-		c = getchar();
-		if( c == '\'') {
-			if((d = peekchar()) != EOF && d != '\''){
-				break;
-			} else {
-				getchar();
-			}
-		}
-		word[size] = c;
-		size ++;
-	}
-
-	if (size >= 16)
-		word[15] = '\0';
-	else
-		word[size] = '\0';
-	return getStringTok(word, tok);	
-
+  int c, d,  count, size = 0;
+  char string[15];
+  while ( (c = peekchar()) != EOF && (c != '\n') && size < 16) 
+  {
+    if (size == 0)
+    {
+      if (c == "'")
+      {
+        getchar();  
+      }
+    }  
+    d = peek2char(); 
+    if ((c == "'") && (d != EOF && d != "'"))
+    {
+      break;
+    }
+    else
+    {
+      string[size] = getchar();
+      size += 1;        
+    }
+  }
+  string[size] = '\0';
+  tok->tokentype = STRINGTOK;
+  strcpy(tok->stringval, string);
+  return tok;   
 }
 
 
