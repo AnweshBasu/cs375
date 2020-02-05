@@ -85,13 +85,13 @@ void skipblanks ()
 			getchar(); 
 			c = peekchar();
         		d = peek2char();
-			while ((c != EOF && d != EOF && !(c == '*' && d== ')')){
+			while (c != EOF && d != EOF && !(c == '*' && d== ')')) {
 				getchar();
 				c = peekchar();
         			d = peek2char();
 			}
 			getchar();
-			getchar();  //Skip over '*' and ')'
+			getchar();  
 		} else {
 			break;
 		}
