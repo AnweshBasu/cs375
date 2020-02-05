@@ -82,7 +82,7 @@ void skipblanks ()
         }
         getchar();
       }
-      else if ((c == '(') && (d = peek2char()) != EOF && d == '*')) {
+      else if ((c == '(') && ((d = peek2char()) != EOF && d == '*')) {
         getchar(); 
         getchar();
         c = peekchar();
