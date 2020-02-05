@@ -231,17 +231,15 @@ TOKEN getstring (TOKEN tok)
 
 
 TOKEN special (TOKEN tok)
-{
+   {
 
     char special[3];
       int j;
-    char c, d;
+    char c;
     for(j = 0; j < 3; j++) {
         if(c = peekchar() && c!= EOF && CHARCLASS[c] == SPECIAL) {
           special[j] = getchar();
-          c = special[j];
-          d = peekchar();
-          if(c == ':' && peekchar() == '=')
+          if(special[j] == ':' && peekchar() == '=')
             special[++j] = getchar();
           else if(special[j] == '<' && (peekchar() == '>' || peekchar() == '='))
             special[++j] = getchar();
