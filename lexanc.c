@@ -193,7 +193,7 @@ TOKEN getstring (TOKEN tok)
 	getchar();
 	int c, d, e, size = 0;
 	char string[256];
-	while ((c = peekchar()) != EOF && size < 15) {
+	while ((c = peekchar()) != EOF) {
 		e = peek2char();
 		d = getchar();
 		if( d == '\'') {
@@ -206,11 +206,11 @@ TOKEN getstring (TOKEN tok)
 		string[size] = c;
 		size ++;
 	}
-	string[size] = '\0';
-	if (size == 15) {
-		while ((c = peekchar()) != EOF && c != "\'" && c != "\n")
-			getchar();
+	if (size > 15) {
+		size = 15;
 	}
+	string[size] = '\0';
+	
 	tok->tokentype = STRINGTOK;
 	strcpy(tok->stringval, string);
 	return tok; 
