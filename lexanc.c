@@ -187,12 +187,12 @@ TOKEN special (TOKEN tok)
       }
     }
   }
-	printf("exit size = %d \n",size);
+	printf("exit size = %d ... val = %c\n",size, special[0]);
   special[size] = '\0';
 
   for (count = 0; count <= 12 ; count++)
   {
-    if (strcmp(identifier, operators[count]) == 0)
+    if (strcmp(special, operators[count]) == 0)
     {
 	printf("found operator\n");
       tok->tokentype = OPERATOR;
@@ -203,7 +203,7 @@ TOKEN special (TOKEN tok)
 
   for (count = 0; count <= 7 ; count++)
   {
-    if (strcmp(identifier, delimiters[count]) == 0)
+    if (strcmp(special, delimiters[count]) == 0)
     {
       tok->tokentype = DELIMITER;
       tok->whichval = count+1;
