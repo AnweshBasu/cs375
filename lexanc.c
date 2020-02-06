@@ -245,7 +245,7 @@ TOKEN number (TOKEN tok)
     int floatNo = 0, exponentNo = 0, negativeNo = 0, exponent = 0, exponentVal = 0;
     int intError = 0;
     int multiplier = 1;
-    double decimal, real = 0.0;
+    double decimal = 0.0, real = 0.0;
     while ( (c = peekchar()) != EOF
             && CHARCLASS[c] == NUMERIC)
       {   
@@ -282,6 +282,8 @@ TOKEN number (TOKEN tok)
       printf("real bef= %d\n", real);
 
     }
+  } else {
+  	real = (double)num;
   }
 
   if ((c = peekchar()) != EOF &&  c == 'e'){
@@ -296,9 +298,9 @@ TOKEN number (TOKEN tok)
       exponentVal = exponentVal * 10 + intVal;    
     }
     printf("exponent part = %d\n", exponentVal);	  
-    printf("exponent = %d\n", exponent);	  
+    printf("prev exponent = %d\n", exponent);	  
     exponent = exponent + sign*exponentVal; 
-    printf("exponent = %d\n", exponent);
+    printf("signed total exponent = %d\n", exponent);
     real = real / pow (10, exponent);
     printf("real after = %d\n", real);
 	  
