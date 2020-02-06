@@ -140,7 +140,7 @@ TOKEN getstring (TOKEN tok)
 	} 
 	    else 
 	    {
-		string[size] = getchar();
+		string[size] = c;
 	    }
         size+=1;
     }
