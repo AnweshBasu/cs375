@@ -139,7 +139,8 @@ TOKEN getstring (TOKEN tok)
 
   	if (c == ' ') 
     {
-      string[size] = ' ';
+      printf("found space");
+      string[size] = (char)32;
       size+=1;
   	} 
     else 
@@ -315,9 +316,9 @@ TOKEN number (TOKEN tok)
   } 
   else 
   {
-      tok->tokentype = NUMBERTOK; 
-      tok->basicdt = INTEGER;
-      tok->intval = num;
-      return (tok);
+    tok->tokentype = NUMBERTOK; 
+    tok->basicdt = INTEGER;
+    tok->intval = num;
+    return (tok);
   }
 }
