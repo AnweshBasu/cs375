@@ -263,8 +263,9 @@ TOKEN number (TOKEN tok)
     intError = 1;
   } 
 
-  if (c = peekchar() != EOF &&  c == '.') {
-    if (d = peek2char() != EOF && CHARCLASS[d] == NUMERIC) {
+  if ((c = peekchar()) != EOF &&  c == '.') {
+    if ((d = peek2char()) != EOF && CHARCLASS[d] == NUMERIC) {
+      
       c = getchar();
       intError = 0; //floating point number has higher max
       floatNo = 1;
