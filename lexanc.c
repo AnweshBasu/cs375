@@ -171,7 +171,7 @@ TOKEN special (TOKEN tok)
 	 
   int c, d, count, size = 0;
   char special[3];
-  if ( (c = peekchar()) != EOF
+  while ( (c = peekchar()) != EOF
         && (size <= 3) && (CHARCLASS[c] == SPECIAL)) 
   {
     special[size] = getchar();
