@@ -74,7 +74,7 @@ void skipblanks ()
 	}
 }
 
-}
+
 /* Get identifiers and reserved words */
 TOKEN identifier (TOKEN tok)
 {
