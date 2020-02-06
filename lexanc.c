@@ -174,24 +174,27 @@ TOKEN special (TOKEN tok)
   while ( (c = peekchar()) != EOF
         && (size <= 3) && (CHARCLASS[c] == SPECIAL)) 
   {
-	printf("here");
+	printf("\nhere\n");
     special[size] = getchar();
     size += 1;
     if(d = peekchar() != EOF) {
       if ((c == ":" && d == "=") || (c == "<" && (d == ">" || d == "=")) || 
           (c == ">" && d == "=") || (c == "." && d == ".")) 
       {
+	      printf("double\n");
         special[size] = getchar();
         size += 1;
       }
     }
   }
+	printf("exit size = %d \n",size);
   special[size] = '\0';
 
   for (count = 0; count <= 12 ; count++)
   {
     if (strcmp(identifier, operators[count]) == 0)
     {
+	printf("found operator\n");
       tok->tokentype = OPERATOR;
       tok->whichval = count+1;
       return tok;
