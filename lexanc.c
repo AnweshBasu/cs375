@@ -241,9 +241,9 @@ TOKEN returnRealTok(double real, TOKEN tok){
 TOKEN number (TOKEN tok)
 { 	
 	long num = 0;
-    int  c, d, intVal;
+    int  c = 0, d = 0, intVal = 0;
     int floatNo = 0, exponentNo = 0, negativeNo = 0, exponent = 0, exponentVal;
-    int intError;
+    int intError = 0;
     int multiplier = 1;
     double decimal, real = 0.0;
     while ( (c = peekchar()) != EOF
