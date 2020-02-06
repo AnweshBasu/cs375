@@ -230,7 +230,8 @@ TOKEN number (TOKEN tok)
 	      printf("exp = %d",exponent);	  
 	      exponent --;
 	      intError = 1;
-	    } else {	  
+	    } else {	
+	      printf("intval = %d", intVal);	  
 	      num = num * 10 + intVal;
 	      printf("num = %ld  ", num);	  
 	    }
