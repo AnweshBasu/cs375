@@ -168,7 +168,7 @@ TOKEN getstring (TOKEN tok)
 
 TOKEN special (TOKEN tok)
 {
-	 {
+	 
   int c, count, size = 0;
   char special[3];
   if ( (c = peekchar()) != EOF
@@ -206,7 +206,6 @@ TOKEN special (TOKEN tok)
       return tok;
     }
   }
-}
 }
 
 TOKEN handleRealError(TOKEN tok){
