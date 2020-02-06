@@ -179,11 +179,12 @@ TOKEN special (TOKEN tok)
     size += 1;  
     d = peekchar();	  
     printf("c = %c   d = %c \n",c,d);
-    printf("c equal %d   d equal %d", c==":", d=="=");
+    printf("c equal %d   d equal %d \n", c ==':', d == '=');
+    printf("c int = %d d int = %d   : is  %d = is %d \n",(int)c,(int)d, (int)':', (int)'=');    
 	  
 	  
     if(d != EOF) {
-      if ((c == ":" && d == "=") || (c == "<" && (d == ">" || d == "=")) || (c == ">" && d == "=") || (c == "." && d == ".")) 
+      if ((c == ':' && d == '=') || (c == "<" && (d == ">" || d == "=")) || (c == ">" && d == "=") || (c == "." && d == ".")) 
       {
 	printf("double\n");
         special[size] = getchar();
