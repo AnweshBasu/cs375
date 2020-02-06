@@ -240,7 +240,7 @@ TOKEN returnRealTok(double real, TOKEN tok){
 /* Get and convert unsigned numbers of all types. */
 TOKEN number (TOKEN tok)
 { 	
-	long num;
+	long num = 0;
     int  c, d, intVal;
     int floatNo = 0, exponentNo = 0, negativeNo = 0, exponent = 0, exponentVal;
     int intError;
@@ -250,12 +250,14 @@ TOKEN number (TOKEN tok)
             && CHARCLASS[c] == NUMERIC)
       {   
         intVal = (getchar() - '0');
-          if ( num > INT_MAX ) {
-      exponent ++;
-      intError = 1;
-    } else {
-      num = num * 10 + intVal;
-    }
+	printf("intVal = %d\n", intVal);
+	  if ( num > INT_MAX ) {
+	      exponent ++;
+	      intError = 1;
+	    } else {
+	      num = num * 10 + intVal;
+	      printf("num = %d\n", num);	  
+	    }
         }
 
     if ( num > INT_MAX ) {
