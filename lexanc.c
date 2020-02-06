@@ -255,7 +255,7 @@ TOKEN number (TOKEN tok)
       }
       //printf("decimal part = %f\n", decimalPart);
       real = (double) num + decimalPart; 
-      //printf("real bef= %f\n", real);
+      printf("real bef= %f\n", real);
 
     }
   } else {
@@ -307,6 +307,7 @@ TOKEN number (TOKEN tok)
       tok->realval = real;
       return tok;
     } else {
+      real = real / pow (10, exponent);
       tok->tokentype = NUMBERTOK;
       tok->basicdt = REAL;
       tok->realval = real;
