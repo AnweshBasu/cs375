@@ -305,7 +305,7 @@ TOKEN number (TOKEN tok)
     }
     printf("exponent part = %d\n", exponentVal);	  
     printf("prev exponent = %d\n", exponent);	  
-    exponent = exponent + sign*exponentVal; 
+    exponent = sign*exponentVal; 
     printf("signed total exponent = %d\n", exponent);
     real = real / pow (10, exponent);
     printf("real after = %f\n", real);
