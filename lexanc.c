@@ -244,8 +244,8 @@ TOKEN number (TOKEN tok)
     int  c = 0, d = 0, intVal = 0;
     int floatNo = 0, exponentNo = 0, negativeNo = 0, exponent = 0, exponentVal = 0;
     int intError = 0;
-    int multiplier = 1;
-    double decimal = 0.0, real = 0.0;
+    int divideAdjustment = 1;
+    double decimalPart = 0.0, real = 0.0;
     while ( (c = peekchar()) != EOF
             && CHARCLASS[c] == NUMERIC)
       {   
@@ -273,12 +273,14 @@ TOKEN number (TOKEN tok)
       intError = 0; //floating point number has higher max
       floatNo = 1;
       while ((c = peekchar()) != EOF && (CHARCLASS[c] == NUMERIC)) {
+	      
         intVal = getchar() - '0';
-        multiplier *= 10;
-        decimal = decimal + ((double)intVal/multiplier);
+        divideAdjustment *= 10;
+        decimalPart = decimalPart + ((double)intVal/divideAdjustment);
+	printf("dec = %f  ", decimalpart);      
       }
-      printf("decimal part = %f\n", decimal);
-      real = (double) num + decimal; 
+      printf("decimal part = %f\n", decimalPart);
+      real = (double) num + decimalPart; 
       printf("real bef= %f\n", real);
 
     }
