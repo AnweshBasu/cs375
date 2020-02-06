@@ -186,8 +186,12 @@ TOKEN special (TOKEN tok)
     }
   }
   special[size] = '\0';
-  printf("val = %c", special[0]);
+  printf("size = %d .. val = %c \n", size, special[0]);
+  for (count = 0; count <= 7 ; count++)
+  {	
   printf("delim? = %d", strcmp(special, delimiters[count]));
+  }
+  printf("\n");
   for (count = 0; count <= 12 ; count++)
   {
     if (strcmp(special, operators[count]) == 0)
