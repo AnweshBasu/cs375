@@ -169,7 +169,7 @@ TOKEN getstring (TOKEN tok)
 TOKEN special (TOKEN tok)
 {
 	  char special[3];
-      int j;
+      int j,count;
     char c, d;
     for(j = 0; j < 3; j++) {
         if((c = peekchar()) && c!= EOF && CHARCLASS[c] == SPECIAL) {
@@ -185,7 +185,7 @@ TOKEN special (TOKEN tok)
       
     }
     special[j] = '\0';
-
+	 
     for (count = 0; count <= 12 ; count++)
   {
     if (strcmp(identifier, operators[i]) == 0)
@@ -197,8 +197,8 @@ TOKEN special (TOKEN tok)
   }
 	
     /* Delimeters */
-    int i;
-    for(i = 0; i <= 7; i++) {
+   
+    for(count = 0; count <= 7; count++) {
       if(strcmp(special,delimiters[i]) == 0) {
         tok->tokentype = DELIMITER;
         tok->whichval = i + 1;
