@@ -175,7 +175,7 @@ TOKEN special (TOKEN tok)
         && (size <= 3) && (CHARCLASS[c] == SPECIAL)) 
   {
     special[size] = getchar();
-    size += 1
+    size += 1;
     if(d = peekchar() != EOF) {
       if ((c == ":" && d == "=") || (c == "<" && (d == ">" || d == "=")) || 
           (c == ">" && d == "=") || (c == "." && d == ".")) 
@@ -185,7 +185,7 @@ TOKEN special (TOKEN tok)
       }
     }
   }
-  special[size] = '\0'
+  special[size] = '\0';
 
   for (count = 0; count <= 12 ; count++)
   {
