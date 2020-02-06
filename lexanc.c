@@ -188,7 +188,7 @@ TOKEN special (TOKEN tok)
 	 
     for (count = 0; count <= 12 ; count++)
   {
-    if (strcmp(identifier, operators[i]) == 0)
+    if (strcmp(identifier, operators[count]) == 0)
     {
       tok->tokentype = OPERATOR;
       tok->whichval = i+1;
