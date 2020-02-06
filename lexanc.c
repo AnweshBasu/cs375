@@ -180,7 +180,7 @@ TOKEN special (TOKEN tok)
       if ((c == ":" && d == "=") || (c == "<" && (d == ">" || d == "=")) || 
           (c == ">" && d == "=") || (c == "." && d == ".")) 
       {
-	//printf("double");
+	printf("double");
         special[size] = getchar();
         size += 1;
       } else {
