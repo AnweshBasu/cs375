@@ -171,8 +171,7 @@ TOKEN special (TOKEN tok)
 	  char special[3];
       int j,count;
     char c, d;
-    for(j = 0; j < 3; j++) {
-        if((c = peekchar()) && c!= EOF && CHARCLASS[c] == SPECIAL) {
+    if((c = peekchar()) != EOF && CHARCLASS[c] == SPECIAL) {
           special[j] = getchar();
           c = special[j];
           d = peekchar();
@@ -181,9 +180,6 @@ TOKEN special (TOKEN tok)
           j++;
           break;
         }
-        else break;
-      
-    }
     special[j] = '\0';
 	 
     for (count = 0; count <= 12 ; count++)
