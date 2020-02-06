@@ -240,9 +240,9 @@ TOKEN returnRealTok(double real, TOKEN tok){
 /* Get and convert unsigned numbers of all types. */
 TOKEN number (TOKEN tok)
 { 	
-	long num = 0;
+	long num = 0, exponent = 0, exponentVal = 0;
     int  c = 0, d = 0, intVal = 0;
-    int floatNo = 0, exponentNo = 0, negativeNo = 0, exponent = 0, exponentVal = 0;
+    int floatNo = 0, exponentNo = 0, negativeNo = 0;
     int intError = 0;
     double divideAdjustment = 1.0;
     double decimalPart = 0.0, real = 0.0;
@@ -253,7 +253,7 @@ TOKEN number (TOKEN tok)
 	//printf("intVal = %d\n", intVal);
 	  if ( num > INT_MAX ) {
 	      //printf("start int error\n");
-	      exponent ++;
+	      exponent --;
 	      intError = 1;
 	    } else {
 	      num = num * 10 + intVal;
@@ -262,7 +262,7 @@ TOKEN number (TOKEN tok)
         }
 
     if ( num > INT_MAX ) {
-    exponent ++;
+    exponent --;
     intError = 1;
   } 
   printf("final num = %d\n", num);
@@ -305,7 +305,7 @@ TOKEN number (TOKEN tok)
     }
     printf("exponent part = %d\n", exponentVal);	  
     printf("prev exponent = %d\n", exponent);	  
-    exponent = sign*exponentVal; 
+    exponent = exponent + sign*exponentVal; 
     printf("signed total exponent = %d\n", exponent);
     real = real / pow (10, exponent);
     printf("real after = %f\n", real);
