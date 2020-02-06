@@ -74,36 +74,6 @@ void skipblanks ()
 	}
 }
 
-TOKEN getReservedWordTok(int val, TOKEN tok) {
-	tok->tokentype = RESERVED;
-	tok->whichval = val;
-	return tok;
-}
-
-TOKEN getIdentifierTok(char word[], TOKEN tok) {
-	tok->tokentype = IDENTIFIERTOK;
-	strcpy(tok->stringval, word);
-	return tok;
-}
-
-TOKEN getDelimiterTok(int val, TOKEN tok) {
-	tok->tokentype = DELIMITER;
-	tok->whichval = val;
-	return tok;
-}
-
-TOKEN getOperatorTok(int val, TOKEN tok) {
-	tok->tokentype = OPERATOR;
-	tok->whichval = val;
-	return tok;
-}
-
-TOKEN getStringTok(char word[], TOKEN tok) {
-	tok->tokentype = STRINGTOK;
-	strcpy(tok->stringval, word);
-	return tok;
-} 
-
 TOKEN getIntegerTok(int val, TOKEN tok) {
 	tok->tokentype = NUMBERTOK;
 	tok->basicdt = INTEGER;
@@ -198,65 +168,33 @@ TOKEN getstring (TOKEN tok)
 
 TOKEN special (TOKEN tok)
 {
-	int c, d, size = 0, flag = 0, val = 0, i;
-	char oper[3];
+	  char special[3];
+      int j;
+    char c, d;
+    for(j = 0; j < 3; j++) {
+        if((c = peekchar()) && c!= EOF && CHARCLASS[c] == SPECIAL) {
+          special[j] = getchar();
+          c = special[j];
+          d = peekchar();
+          if ((c == ':' && d == '=') || (c == '<' && (d == '>' || d == '=')) || (c == '>' && d == '=') || (c == '.' && d == '.'))
+            special[++j] = getchar();
+          j++;
+          break;
+        }
+        else break;
+      
+    }
+    special[j] = '\0';
 
-	while ( (c = peekchar()) != EOF
-			&& CHARCLASS[c] == SPECIAL) {
-		c = getchar();	
-		oper[size] = c;
-		size ++;
-
-		d = peekchar();
-		oper[size] = d;	
-		size ++;
-		
-		oper[size] = '\0';
-
-		for(i = 0; i < 19; i ++){
-			if(strcmp(oper, operators[i]) == 0) {
-				flag = 1;
-				break;
-			}
-		}
-		if (flag == 1) {
-			getchar();
-			return getOperatorTok(i + 1, tok);
-		} 
-		
-		for(i = 0; i < 8; i ++){
-			if(strcmp(oper, delimiters[i]) == 0) {
-				flag = 1;
-				break;
-			}
-		}
-		if (flag == 1) {
-			getchar();
-			return getDelimiterTok(i + 1, tok);
-		}
-		
-		oper[size - 1] = '\0';
-
-		for(i = 0; i < 19; i ++){
-			if(strcmp(oper, operators[i]) == 0) {
-				flag = 1;
-				break;
-			}
-		}
-		if (flag == 1) {
-			return getOperatorTok(i + 1, tok);
-		} 
-		
-		for(i = 0; i < 8; i ++){
-			if(strcmp(oper, delimiters[i]) == 0) {
-				flag = 1;
-				break;
-			}
-		}
-		if (flag == 1) {
-			return getDelimiterTok(i + 1, tok);
-		}
-	}
+    /* Delimeters */
+    int i;
+    for(i = 0; i <= 7; i++) {
+      if(strcmp(special,delimiters[i]) == 0) {
+        tok->tokentype = DELIMITER;
+        tok->whichval = i + 1;
+        return tok;
+      }
+    }
 	
 }
 
