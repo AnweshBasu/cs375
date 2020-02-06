@@ -160,7 +160,7 @@ TOKEN getstring (TOKEN tok)
 		
 	}
 	//consume the extra characters
-	if (index >= 15) 
+	if (size >= 15) 
 	{
 		while (!((c = peekchar()) != EOF && c == '\'' 
 			&& (d = peek2char()) != EOF && d!= '\''))
