@@ -174,6 +174,7 @@ TOKEN special (TOKEN tok)
   while ( (c = peekchar()) != EOF
         && (size <= 3) && (CHARCLASS[c] == SPECIAL)) 
   {
+	printf("here");
     special[size] = getchar();
     size += 1;
     if(d = peekchar() != EOF) {
