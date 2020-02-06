@@ -277,7 +277,7 @@ TOKEN number (TOKEN tok)
         intVal = getchar() - '0';
         divideAdjustment *= 10;
         decimalPart = decimalPart + ((double)intVal/divideAdjustment);
-	printf("dec = %f  ", decimalpart);      
+	printf("dec = %f  ", decimalPart);      
       }
       printf("decimal part = %f\n", decimalPart);
       real = (double) num + decimalPart; 
