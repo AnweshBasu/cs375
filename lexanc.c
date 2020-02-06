@@ -291,7 +291,7 @@ TOKEN number (TOKEN tok)
     c = getchar();
     exponentNo = 1;
     int sign = 1;
-    sign *= (c = peekchar()) == '-' ? -1 : 1;
+    sign *= (c = peekchar()) == '-' ? 1 : -1;
     if ((c = peekchar()) != EOF && CHARCLASS[c] != NUMERIC)
     {
 	getchar();
