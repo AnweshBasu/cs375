@@ -191,7 +191,7 @@ TOKEN special (TOKEN tok)
     if (strcmp(identifier, operators[count]) == 0)
     {
       tok->tokentype = OPERATOR;
-      tok->whichval = i+1;
+      tok->whichval = count+1;
       return tok;
     }
   }
@@ -199,9 +199,9 @@ TOKEN special (TOKEN tok)
     /* Delimeters */
    
     for(count = 0; count <= 7; count++) {
-      if(strcmp(special,delimiters[i]) == 0) {
+      if(strcmp(special,delimiters[count]) == 0) {
         tok->tokentype = DELIMITER;
-        tok->whichval = i + 1;
+        tok->whichval = count + 1;
         return tok;
       }
     }
