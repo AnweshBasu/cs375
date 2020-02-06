@@ -180,19 +180,19 @@ TOKEN special (TOKEN tok)
       if ((c == ":" && d == "=") || (c == "<" && (d == ">" || d == "=")) || 
           (c == ">" && d == "=") || (c == "." && d == ".")) 
       {
-	printf("double");
+	//printf("double");
         special[size] = getchar();
         size += 1;
       }
     }
   }
   special[size] = '\0';
-  printf("size = %d .. val = %c \n", size, special[0]);
-  for (count = 0; count <= 7 ; count++)
-  {	
-  printf("delim? = %d", strcmp(special, delimiters[count]));
-  }
-  printf("\n");
+  //printf("size = %d .. val = %c \n", size, special[0]);
+  //for (count = 0; count <= 7 ; count++)
+  //{	
+  //printf("delim? = %d", strcmp(special, delimiters[count]));
+  //}
+  //printf("\n");
   for (count = 0; count <= 12 ; count++)
   {
     if (strcmp(special, operators[count]) == 0)
@@ -207,7 +207,7 @@ TOKEN special (TOKEN tok)
   {
     if (strcmp(special, delimiters[count]) == 0)
     {
-      printf("found delimiter");
+      //printf("found delimiter");
       tok->tokentype = DELIMITER;
       tok->whichval = count+1;
       return tok;
