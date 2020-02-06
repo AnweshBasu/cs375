@@ -186,6 +186,16 @@ TOKEN special (TOKEN tok)
     }
     special[j] = '\0';
 
+    for (count = 0; count <= 12 ; count++)
+  {
+    if (strcmp(identifier, operators[i]) == 0)
+    {
+      tok->tokentype = OPERATOR;
+      tok->whichval = i+1;
+      return tok;
+    }
+  }
+	
     /* Delimeters */
     int i;
     for(i = 0; i <= 7; i++) {
