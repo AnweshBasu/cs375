@@ -253,6 +253,10 @@ TOKEN number (TOKEN tok)
 	//printf("intVal = %d\n", intVal);
 	  if ( num > INT_MAX ) {
 	      //printf("start int error\n");
+	      if (exponent == 0) 
+	      {
+	      	exponent = 1;
+	      }
 	      exponent --;
 	      intError = 1;
 	    } else {
