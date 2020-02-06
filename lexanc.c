@@ -174,10 +174,8 @@ TOKEN special (TOKEN tok)
   while ( (c = peekchar()) != EOF
         && (size <= 3) && (CHARCLASS[c] == SPECIAL)) 
   {
-	  if (size == 0 ){
-	    special[size] = getchar();
-	    size += 1;
-	  }
+    special[size] = getchar();
+    size += 1;
     if(d = peekchar() != EOF) {
       if ((c == ":" && d == "=") || (c == "<" && (d == ">" || d == "=")) || 
           (c == ">" && d == "=") || (c == "." && d == ".")) 
@@ -185,7 +183,8 @@ TOKEN special (TOKEN tok)
 	//printf("double");
         special[size] = getchar();
         size += 1;
-      }
+      } else {
+	      size = 1;
     }
   }
   special[size] = '\0';
