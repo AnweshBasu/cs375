@@ -227,11 +227,6 @@ TOKEN number (TOKEN tok)
         intVal = (getchar() - '0');
 	//printf("intVal = %d\n", intVal);
 	  if ( num > INT_MAX ) {
-	      //printf("start int error = %d    exponent = %d\n", num,exponent);
-	      //if (exponent == 0) 
-	      //{
-	      //	exponent = 1;
-	      //}
 	      exponent --;
 	      intError = 1;
 	    } else {
@@ -240,10 +235,9 @@ TOKEN number (TOKEN tok)
 	    }
         }
 
-    //if ( num > INT_MAX ) {
-    //exponent --;
-    //intError = 1;
-  //} 
+   if ( num > INT_MAX ) {
+    intError = 1;
+  } 
   //printf("final num = %d\n", num);
   if ((c = peekchar()) != EOF &&  c == '.') {
     if ((d = peek2char()) != EOF && CHARCLASS[d] == NUMERIC) {
