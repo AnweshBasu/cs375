@@ -176,7 +176,9 @@ TOKEN special (TOKEN tok)
   {
     special[size] = getchar();
     size += 1;  
-    if(d = peekchar() != EOF) {
+    d = peekchar();	  
+	  
+    if(d != EOF) {
       if ((c == ":" && d == "=") || (c == "<" && (d == ">" || d == "=")) || 
           (c == ">" && d == "=") || (c == "." && d == ".")) 
       {
