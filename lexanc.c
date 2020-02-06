@@ -291,7 +291,10 @@ TOKEN number (TOKEN tok)
 	  
     if (real > FLT_MAX || real < FLT_MIN) {
       printf("Floating number out of range \n");
-      // return getRealTok(0.0, tok);
+      tok->tokentype = NUMBERTOK;
+      tok->basicdt = REAL;
+      tok->realval = real;
+      return tok;
     } else {
       tok->tokentype = NUMBERTOK;
       tok->basicdt = REAL;
@@ -304,7 +307,10 @@ TOKEN number (TOKEN tok)
   if (floatNo) {
     if (real > FLT_MAX || real < FLT_MIN) {
       printf("Floating number out of range \n");
-      // return getRealTok(0.0, tok);
+      tok->tokentype = NUMBERTOK;
+      tok->basicdt = REAL;
+      tok->realval = real;
+      return tok;
     } else {
       tok->tokentype = NUMBERTOK;
       tok->basicdt = REAL;
