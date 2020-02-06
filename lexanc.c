@@ -169,7 +169,8 @@ TOKEN getstring (TOKEN tok)
 TOKEN special (TOKEN tok)
 {
 	 
-  int c, d, count, size = 0;
+  int count, size = 0;
+  char c, d;	
   char special[3];
   while ( (c = peekchar()) != EOF
         && (size <= 3) && (CHARCLASS[c] == SPECIAL)) 
@@ -177,7 +178,7 @@ TOKEN special (TOKEN tok)
     special[size] = getchar();
     size += 1;  
     d = peekchar();	  
-	  
+    printf("c = %c   d = %c \n",c,d);	  
     if(d != EOF) {
       if ((c == ":" && d == "=") || (c == "<" && (d == ">" || d == "=")) || 
           (c == ">" && d == "=") || (c == "." && d == ".")) 
