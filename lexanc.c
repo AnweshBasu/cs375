@@ -275,7 +275,7 @@ TOKEN number (TOKEN tok)
 	getchar();
     }
     //printf("sign = %d\n",sign);
-    while ((c = peekchar()) != EOF && CHARCLASS[c] == NUMERIC &&  exponentVal < INT_MAX) {
+    while ((c = peekchar()) != EOF && CHARCLASS[c] == NUMERIC) {
       intVal = getchar() - '0';
       //printf("exp intVal = %d ", intVal );
       exponentVal = exponentVal * 10 + intVal;    
