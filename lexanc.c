@@ -186,6 +186,7 @@ TOKEN special (TOKEN tok)
     }
   }
   special[size] = '\0';
+  printf("val = %c", special[0]);
 
   for (count = 0; count <= 12 ; count++)
   {
@@ -201,6 +202,7 @@ TOKEN special (TOKEN tok)
   {
     if (strcmp(special, delimiters[count]) == 0)
     {
+      printf("found delimiter");
       tok->tokentype = DELIMITER;
       tok->whichval = count+1;
       return tok;
