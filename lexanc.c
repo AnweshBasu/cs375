@@ -279,7 +279,7 @@ TOKEN number (TOKEN tok)
     }
   }
 
-  if (c = peekchar() != EOF &&  c == 'e'){
+  if ((c = peekchar()) != EOF &&  c == 'e'){
     c = getchar();
     exponentNo = 1;
     int sign = 1;
@@ -292,7 +292,7 @@ TOKEN number (TOKEN tok)
     real = real / pow (10, exponent);
     
     if (real > FLT_MAX || real < FLT_MIN) {
-      printf("Float number too big or small \n");
+      printf("Floating number out of range \n");
       // return getRealTok(0.0, tok);
     } else {
       tok->tokentype = NUMBERTOK;
@@ -305,7 +305,7 @@ TOKEN number (TOKEN tok)
 
   if (floatNo) {
     if (real > FLT_MAX || real < FLT_MIN) {
-      printf("Float number too big or small \n");
+      printf("Floating number out of range \n");
       // return getRealTok(0.0, tok);
     } else {
       tok->tokentype = NUMBERTOK;
@@ -316,7 +316,7 @@ TOKEN number (TOKEN tok)
   }
 
   if (intError) {
-    printf("Integer is too big\n");
+    printf("Floating number out of range\n");
   } 
   else 
   {
