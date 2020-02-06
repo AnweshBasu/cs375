@@ -262,10 +262,10 @@ TOKEN number (TOKEN tok)
     exponent ++;
     intError = 1;
   } 
-
+  printf("num = %d\n", num);
   if ((c = peekchar()) != EOF &&  c == '.') {
     if ((d = peek2char()) != EOF && CHARCLASS[d] == NUMERIC) {
-      
+      printf("decimal number\n");
       c = getchar();
       intError = 0; //floating point number has higher max
       floatNo = 1;
@@ -274,23 +274,31 @@ TOKEN number (TOKEN tok)
         multiplier *= 10;
         decimal = decimal + ((double)intVal/multiplier);
       }
+      printf("decimal part = %d\n", decimal);
       real = (double) num + decimal; 
+      printf("real bef= %d\n", real);
 
     }
   }
 
   if ((c = peekchar()) != EOF &&  c == 'e'){
+	  printf("number has exponent\n");
     c = getchar();
     exponentNo = 1;
     int sign = 1;
         sign *= (c = peekchar()) == '-' ? -1 : 1;
+	  printf("sign = %d\n",sign);
     while ((c = peekchar()) != EOF && CHARCLASS[c] == NUMERIC &&  exponentVal > INT_MAX) {
       intVal = getchar() - '0';
       exponentVal = exponentVal * 10 + intVal;    
     }
-    exponent = exponent + sign*exponentVal;
+    printf("exponent part = %d\n", exponentVal);	  
+    printf("exponent = %d\n", exponent);	  
+    exponent = exponent + sign*exponentVal; 
+    printf("exponent = %d\n", exponent);
     real = real / pow (10, exponent);
-    
+    printf("real after = %d\n", real);
+	  
     if (real > FLT_MAX || real < FLT_MIN) {
       printf("Floating number out of range \n");
       // return getRealTok(0.0, tok);
@@ -316,7 +324,7 @@ TOKEN number (TOKEN tok)
   }
 
   if (intError) {
-    printf("Floating number out of range\n");
+    printf("Integer number out of range\n");
   } 
   else 
   {
