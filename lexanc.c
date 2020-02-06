@@ -171,16 +171,17 @@ TOKEN special (TOKEN tok)
 	 
   int c, d, count, size = 0;
   char special[3];
-  if ( (c = peekchar()) != EOF
+  while ( (c = peekchar()) != EOF
         && (size <= 3) && (CHARCLASS[c] == SPECIAL)) 
   {
     special[size] = getchar();
+    size += 1;  
     if(d = peekchar() != EOF) {
       if ((c == ":" && d == "=") || (c == "<" && (d == ">" || d == "=")) || 
           (c == ">" && d == "=") || (c == "." && d == ".")) 
       {
 	//printf("double");
-        special[++size] = getchar();
+        special[size] = getchar();
         size += 1;
       } 
     }
