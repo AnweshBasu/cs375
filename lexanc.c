@@ -37,18 +37,18 @@
    12345 123    345  357
  */
 
-const char* operators[] = { '+', '-', '*', '/', ':=', '=', '<>', '<',
-  '<=', '>=', '>', '^', '.', 'and', 'or', 'not',
-  'div', 'mod', 'in' };
+char* operators[] = { "+", "-", "*", "/", ":=", "=", "<>", "<",
+	"<=", ">=", ">", "^", ".", "and", "or", "not",
+	"div", "mod", "in" };
 
-const char* delimiters[] = { ',', ';', ':', '(', ')', '[', ']', '..'};
+char* delimiters[] = { ",", ";", ":", "(", ")", "[", "]", ".."};
 
-const char* reservedWords[] = { 'array', 'begin', 'case', 'const', 'do',
-  'downto', 'else', 'end', 'file', 'for', 
-  'function', 'goto', 'if', 'label', 'nil', 
-  'of', 'packed', 'procedure', 'program', 'record',
-  'repeat', 'set', 'then', 'to', 'type', 'until',
-  'var', 'while', 'with'};
+char* reservedWords[] = { "array", "begin", "case", "const", "do",
+	"downto", "else", "end", "file", "for", 
+	"function", "goto", "if", "label", "nil", 
+	"of", "packed", "procedure", "program", "record",
+	"repeat", "set", "then", "to", "type", "until",
+	"var", "while", "with"};
 
 
 
