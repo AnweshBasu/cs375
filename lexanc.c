@@ -277,9 +277,9 @@ TOKEN number (TOKEN tok)
         multiplier *= 10;
         decimal = decimal + ((double)intVal/multiplier);
       }
-      printf("decimal part = %d\n", decimal);
+      printf("decimal part = %f\n", decimal);
       real = (double) num + decimal; 
-      printf("real bef= %d\n", real);
+      printf("real bef= %f\n", real);
 
     }
   } else {
@@ -306,7 +306,7 @@ TOKEN number (TOKEN tok)
     exponent = exponent + sign*exponentVal; 
     printf("signed total exponent = %d\n", exponent);
     real = real / pow (10, exponent);
-    printf("real after = %d\n", real);
+    printf("real after = %f\n", real);
 	  
     if (real > FLT_MAX || real < FLT_MIN) {
       printf("Floating number out of range \n");
