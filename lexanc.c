@@ -168,39 +168,45 @@ TOKEN getstring (TOKEN tok)
 
 TOKEN special (TOKEN tok)
 {
-	  char special[3];
-      int j,count;
-    char c, d;
-    if((c = peekchar()) != EOF && CHARCLASS[c] == SPECIAL) {
-          special[j] = getchar();
-          c = special[j];
-          d = peekchar();
-          if ((c == ':' && d == '=') || (c == '<' && (d == '>' || d == '=')) || (c == '>' && d == '=') || (c == '.' && d == '.'))
-            special[++j] = getchar();
-          j++;
-        }
-    special[j] = '\0';
-	 
-    for (count = 0; count <= 12 ; count++)
+	 {
+  int c, count, size = 0;
+  char special[3];
+  if ( (c = peekchar()) != EOF
+        && (size <= 3) && (CHARCLASS[c] == SPECIAL)) 
   {
-    if (strcmp(identifier, operators[count]) == 0)
+    special[size] = getchar();
+    size += 1
+    if(d = peekchar() != EOF) {
+      if ((c == ":" && d == "=") || (c == "<" && (d == ">" || d == "=")) || 
+          (c == ">" && d == "=") || (c == "." && d == ".")) 
+      {
+        special[size] = getchar()
+        size += 1
+      }
+    }
+  }
+  special[size] = '\0'
+
+  for (count = 0; count <= 12 ; count++)
+  {
+    if (strcmp(identifier, operators[i]) == 0)
     {
       tok->tokentype = OPERATOR;
-      tok->whichval = count+1;
+      tok->whichval = i+1;
       return tok;
     }
   }
-	
-    /* Delimeters */
-   
-    for(count = 0; count <= 7; count++) {
-      if(strcmp(special,delimiters[count]) == 0) {
-        tok->tokentype = DELIMITER;
-        tok->whichval = count + 1;
-        return tok;
-      }
+
+  for (count = 0; count <= 7 ; count++)
+  {
+    if (strcmp(identifier, delimiters[i]) == 0)
+    {
+      tok->tokentype = DELIMITER;
+      tok->whichval = i+1;
+      return tok;
     }
-	
+  }
+}
 }
 
 TOKEN handleRealError(TOKEN tok){
