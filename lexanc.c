@@ -240,109 +240,88 @@ TOKEN returnRealTok(double real, TOKEN tok){
 /* Get and convert unsigned numbers of all types. */
 TOKEN number (TOKEN tok)
 { 	
-	long num = 0, exponent = 0, expValue = 0;
-	double real = 0.0, decimal = 0.0, multiplier = 10.0;
-	int  c, d, charval, dFlag = 0, negFlag = 0, eFlag = 0, intError = 0, floatError = 0;
+	long num;
+    int  c, d, intVal;
+    int floatNo = 0, exponentNo = 0, negativeNo = 0, exponent = 0, exponentVal;
+    int intError;
+    int multiplier = 1;
+    double decimal, real = 0.0;
+    while ( (c = peekchar()) != EOF
+            && CHARCLASS[c] == NUMERIC)
+      {   
+        intVal = (getchar() - '0');
+          if ( num > INT_MAX ) {
+      exponent ++;
+      intError = 1;
+    } else {
+      num = num * 10 + intVal;
+    }
+        }
 
-	while ((c = peekchar()) != EOF
-			&& (CHARCLASS[c] == NUMERIC))
-	{   
-		c = getchar();
-		charval = c - '0';
+    if ( num > INT_MAX ) {
+    exponent ++;
+    intError = 1;
+  } 
 
-		if ( num > INT_MAX ) {
-			exponent ++;
-			intError = 1;
-		} else {
-			num = num * 10 + charval;
-		}
-	
-	}
+  if (c = peekchar() != EOF &&  c == '.') {
+    if (d = peek2char() != EOF && CHARCLASS[d] == NUMERIC) {
+      c = getchar();
+      intError = 0; //floating point number has higher max
+      floatNo = 1;
+      while ((c = peekchar()) != EOF && (CHARCLASS[c] == NUMERIC)) {
+        intVal = getchar() - '0';
+        multiplier *= 10;
+        decimal = decimal + ((double)intVal/multiplier);
+      }
+      real = (double) num + decimal; 
 
-	if ( num > INT_MAX ) {
-		exponent ++;
-		intError = 1;
-	} 
+    }
+  }
 
-	//The part after the decimal point
-	if(c == '.' && (d = peek2char()) != EOF && CHARCLASS[d] == NUMERIC) {
-		intError = 0;
-		dFlag = 1;
-		getchar();
-		while ((c = peekchar()) != EOF
-				&& (CHARCLASS[c] == NUMERIC)) {
-			c = getchar();
-			charval = c - '0';
-			decimal = decimal + ((double) charval / multiplier);
-			multiplier *= 10;
-		}	
+  if (c = peekchar() != EOF &&  c == 'e'){
+    c = getchar();
+    exponentNo = 1;
+    int sign = 1;
+        sign *= (c = peekchar()) == '-' ? -1 : 1;
+    while ((c = peekchar()) != EOF && CHARCLASS[c] == NUMERIC &&  exponentVal > INT_MAX) {
+      intVal = getchar() - '0';
+      exponentVal = exponentVal * 10 + intVal;    
+    }
+    exponent = exponent + sign*exponentVal;
+    real = real / pow (10, exponent);
+    
+    if (real > FLT_MAX || real < FLT_MIN) {
+      printf("Float number too big or small \n");
+      // return getRealTok(0.0, tok);
+    } else {
+      tok->tokentype = NUMBERTOK;
+      tok->basicdt = REAL;
+      tok->realval = real;
+      return tok;
+    }
 
-		real = (double) num + decimal;
+  }
 
-	}
+  if (floatNo) {
+    if (real > FLT_MAX || real < FLT_MIN) {
+      printf("Float number too big or small \n");
+      // return getRealTok(0.0, tok);
+    } else {
+      tok->tokentype = NUMBERTOK;
+      tok->basicdt = REAL;
+      tok->realval = real;
+      return tok;
+    }
+  }
 
-	//The exponent part
-	if(c == 'e') {
-		eFlag = 1;
-		getchar();
-		c = peekchar();
-		if (c == '-') {
-			negFlag = 1;
-			getchar();
-		} else if (c == '+') {
-			getchar();
-		}
-
-		while ((c = peekchar()) != EOF 
-				&& CHARCLASS[c] == NUMERIC) {	
-			c = getchar();
-			charval = c - '0';
-
-			if ( expValue > INT_MAX ){
-				continue ;
-			}
-			expValue = expValue * 10 + charval;
-		}
-
-	}
-
-	if (dFlag) {
-		if (eFlag) {
-			if (negFlag) {
-				exponent = exponent - expValue;
-				real = real / pow (10, exponent);
-			} else {
-				exponent = exponent + expValue;
-				real = real * pow (10, exponent);
-			}
-
-			return returnRealTok(real, tok);
-
-		} else {
-
-			return returnRealTok(real, tok);
-
-		}
-
-	}
-	
-	if (eFlag)  {
-		real = (double) num;
-		if (negFlag) {
-			exponent = exponent - expValue;
-			real = real / pow(10, exponent);
-		} else {
-			exponent = exponent + expValue;
-			real = real * pow(10, exponent);
-		}
-		return returnRealTok(real, tok);		
-	}
-
-
-	if (intError) {
-		printf("Integer number out of range \n");
-		return getIntegerTok(0, tok);
-	} else {
-		return getIntegerTok(num, tok);
-	}
+  if (intError) {
+    printf("Integer is too big\n");
+  } 
+  else 
+  {
+      tok->tokentype = NUMBERTOK; 
+      tok->basicdt = INTEGER;
+      tok->intval = num;
+      return (tok);
+  }
 }
