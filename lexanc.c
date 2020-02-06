@@ -328,6 +328,10 @@ TOKEN number (TOKEN tok)
 
   if (intError) {
     printf("Integer number out of range\n");
+    tok->tokentype = NUMBERTOK; 
+    tok->basicdt = INTEGER;
+    tok->intval = (int)num;
+    return (tok);	  
   } 
   else 
   {
