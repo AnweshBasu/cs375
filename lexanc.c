@@ -244,7 +244,7 @@ TOKEN number (TOKEN tok)
     int  c = 0, d = 0, intVal = 0;
     int floatNo = 0, exponentNo = 0, negativeNo = 0, exponent = 0, exponentVal = 0;
     int intError = 0;
-    int divideAdjustment = 1;
+    double divideAdjustment = 1.0;
     double decimalPart = 0.0, real = 0.0;
     while ( (c = peekchar()) != EOF
             && CHARCLASS[c] == NUMERIC)
