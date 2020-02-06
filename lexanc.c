@@ -189,20 +189,20 @@ TOKEN special (TOKEN tok)
 
   for (count = 0; count <= 12 ; count++)
   {
-    if (strcmp(identifier, operators[i]) == 0)
+    if (strcmp(identifier, operators[count]) == 0)
     {
       tok->tokentype = OPERATOR;
-      tok->whichval = i+1;
+      tok->whichval = count+1;
       return tok;
     }
   }
 
   for (count = 0; count <= 7 ; count++)
   {
-    if (strcmp(identifier, delimiters[i]) == 0)
+    if (strcmp(identifier, delimiters[count]) == 0)
     {
       tok->tokentype = DELIMITER;
-      tok->whichval = i+1;
+      tok->whichval = count+1;
       return tok;
     }
   }
