@@ -227,11 +227,12 @@ TOKEN number (TOKEN tok)
         intVal = (getchar() - '0');
 	//printf("intVal = %d\n", intVal);
 	  if ( num > INT_MAX ) {
+	      printf("exp = %d",exponent);	  
 	      exponent --;
 	      intError = 1;
 	    } else {
 	      num = num * 10 + intVal;
-	      //printf("num = %d  ", num);	  
+	      printf("num = %d  ", num);	  
 	    }
         }
 
@@ -241,7 +242,7 @@ TOKEN number (TOKEN tok)
   //printf("final num = %d\n", num);
   if ((c = peekchar()) != EOF &&  c == '.') {
     if ((d = peek2char()) != EOF && CHARCLASS[d] == NUMERIC) {
-      //printf("decimal number\n");
+      printf("decimal number\n");
       c = getchar();
       intError = 0; //floating point number has higher max
       floatNo = 1;
