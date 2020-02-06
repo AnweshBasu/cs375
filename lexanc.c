@@ -250,14 +250,14 @@ TOKEN number (TOKEN tok)
             && CHARCLASS[c] == NUMERIC)
       {   
         intVal = (getchar() - '0');
-	printf("intVal = %d\n", intVal);
+	//printf("intVal = %d\n", intVal);
 	  if ( num > INT_MAX ) {
-	      printf("start int error\n");
+	      //printf("start int error\n");
 	      exponent ++;
 	      intError = 1;
 	    } else {
 	      num = num * 10 + intVal;
-	      printf("num = %d  ", num);	  
+	      //printf("num = %d  ", num);	  
 	    }
         }
 
