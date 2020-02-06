@@ -291,8 +291,12 @@ TOKEN number (TOKEN tok)
     c = getchar();
     exponentNo = 1;
     int sign = 1;
-        sign *= (c = peekchar()) == '-' ? -1 : 1;
-	  printf("sign = %d\n",sign);
+    sign *= (c = peekchar()) == '-' ? -1 : 1;
+    if ((c = peekchar()) != EOF && CHARCLASS[c] != NUMERIC)
+    {
+	getchar();
+    }
+    printf("sign = %d\n",sign);
     while ((c = peekchar()) != EOF && CHARCLASS[c] == NUMERIC &&  exponentVal < INT_MAX) {
       intVal = getchar() - '0';
       exponentVal = exponentVal * 10 + intVal;    
