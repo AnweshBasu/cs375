@@ -185,6 +185,7 @@ TOKEN special (TOKEN tok)
         size += 1;
       } else {
 	      size = 1;
+      }
     }
   }
   special[size] = '\0';
