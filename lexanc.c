@@ -134,7 +134,14 @@ TOKEN getstring (TOKEN tok)
         {
             getchar();
         }
-        string[size] = getchar();
+	c = getchar();
+	if (c == ' ') {
+	 string[size] = ' ';
+	} 
+	    else 
+	    {
+		string[size] = getchar();
+	    }
         size+=1;
     }
     if (index >= 15) //get all extra characters
