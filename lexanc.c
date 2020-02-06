@@ -215,7 +215,7 @@ TOKEN special (TOKEN tok)
 /* Get and convert unsigned numbers of all types. */
 TOKEN number (TOKEN tok)
 { 	
-	long num = 0, exponent = 0, exponentVal = 0;
+    long num = 0, exponent = 0, exponentVal = 0;
     int  c = 0, d = 0, intVal = 0;
     int floatNo = 0, exponentNo = 0, negativeNo = 0;
     int intError = 0;
@@ -230,16 +230,16 @@ TOKEN number (TOKEN tok)
 	      printf("exp = %d",exponent);	  
 	      exponent --;
 	      intError = 1;
-	    } else {
+	    } else {	  
 	      num = num * 10 + intVal;
-	      printf("num = %d  ", num);	  
+	      printf("num = %ld  ", num);	  
 	    }
         }
 
    if ( num > INT_MAX ) {
     intError = 1;
   } 
-  //printf("final num = %d\n", num);
+  printf("final num = %ld\n", num);
   if ((c = peekchar()) != EOF &&  c == '.') {
     if ((d = peek2char()) != EOF && CHARCLASS[d] == NUMERIC) {
       printf("decimal number\n");
