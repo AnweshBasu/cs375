@@ -183,7 +183,9 @@ TOKEN special (TOKEN tok)
 	//printf("double");
         special[size] = getchar();
         size += 1;
-      } 
+      } else {
+      	break;
+      }
     }
   }
   special[size] = '\0';
