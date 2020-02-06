@@ -253,9 +253,9 @@ TOKEN number (TOKEN tok)
         divideAdjustment *= 10;
         decimalPart = decimalPart + ((double)intVal/divideAdjustment);
 	
-	printf("dec = %f  ", decimalPart);      
+	//printf("dec = %f  ", decimalPart);      
       }
-      printf("decimal part = %f\n", decimalPart);
+      //printf("decimal part = %f\n", decimalPart);
       real = (double) num + decimalPart; 
       //printf("real bef= %f\n", real);
 
@@ -279,9 +279,9 @@ TOKEN number (TOKEN tok)
       intVal = getchar() - '0';
       //printf("exp intVal = %d ", intVal );
       exponentVal = exponentVal * 10 + intVal;    
-      printf("expVal = %d ", exponentVal);
+      //printf("expVal = %d ", exponentVal);
     }
-    printf("exponent part = %d\n", exponentVal);	  
+    //printf("exponent part = %d\n", exponentVal);	  
     //printf("prev exponent = %d\n", exponent);	  
     exponent = exponent + sign*exponentVal; 
     //printf("signed total exponent = %d\n", exponent);
