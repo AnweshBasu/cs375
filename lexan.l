@@ -69,8 +69,8 @@ string   (\'(.)*?\')
 %%
 
 {ws}       { /* no action and no return */ }
-{comments} { /* no action and no return */ }  ; could remove?
-""         { /* no action and no return */ }  ; could remove?
+{comments} { /* no action and no return */ }  /*could remove?*/
+""         { /* no action and no return */ }  /*could remove?*/
 
 "(*"    { loop:
           while (input() != '*');
@@ -130,7 +130,7 @@ procedure    {return(maketoken(RESERVED, PROCEDURE));}
 then         {return(maketoken(RESERVED, THEN));}
 while        {return(maketoken(RESERVED, WHILE));}
 const        {return(maketoken(RESERVED, CONST));}
-file         {return(maketoken(RESERVED, FILEF));}
+file         {return(maketoken(RESERVED, FILE));}
 label        {return(maketoken(RESERVED, LABEL));}
 program      {return(maketoken(RESERVED, PROGRAM));}
 to           {return(maketoken(RESERVED, TO));}
@@ -211,18 +211,18 @@ int install_string(){
   yylval -> tokentype = STRINGTOK;
   for (j = 1; j < length; j++){
     if(yytext[j]=='\''&& yytext[j+1]=='\''){
-        yylval->stringval[index] = yytext[j];
+        yylval->stringval[size] = yytext[j];
         j++;
       }else{
-        yylval->stringval[index] = yytext[j];  
+        yylval->stringval[size] = yytext[j];  
       }
       size++;
   }
   if(size > 15){
     size = 15;
   }
-  yylval->stringval[size] = '\0'
-  
+  yylval->stringval[size] = '\0';
+
   return(STRING);
 }
 
