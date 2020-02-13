@@ -130,7 +130,7 @@ procedure    {return(maketoken(RESERVED, PROCEDURE));}
 then         {return(maketoken(RESERVED, THEN));}
 while        {return(maketoken(RESERVED, WHILE));}
 const        {return(maketoken(RESERVED, CONST));}
-file         {return(maketoken(RESERVED, FILE));}
+file         {return(maketoken(RESERVED, FILEFILE));}
 label        {return(maketoken(RESERVED, LABEL));}
 program      {return(maketoken(RESERVED, PROGRAM));}
 to           {return(maketoken(RESERVED, TO));}
