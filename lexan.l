@@ -40,8 +40,8 @@ int maketoken(int type, int which);
 int install_id();
 int install_fnum();
 int yywrap();
-int install_num();
-int install_str();
+int install_number();
+int install_string();
 
 /* If the lex yytext buffer turns out to be too small to hold comments,
    add the following lines:
