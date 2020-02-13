@@ -40,6 +40,8 @@ int maketoken(int type, int which);
 int install_id();
 int install_fnum();
 int yywrap();
+int install_num();
+int install_str();
 
 /* If the lex yytext buffer turns out to be too small to hold comments,
    add the following lines:
@@ -53,32 +55,92 @@ TOKEN yylval;     /* This is the type of the lexical analyzer result */
 
 /* regular definitions */
 
+
 delim    [ \t\n]
+comments (\{[^\{\}]+\})
 ws       {delim}+
 letter   [A-Za-z]
 digit    [0-9]
 id       {letter}({letter}|{digit})*
 fnumber  {digit}+(\.{digit}+)?([eE][+\-]?{digit}+)?
+number   {digit}+
+string   (\'(.)*?\')
 
 %%
 
-{ws}      { /* no action and no return */ }
-if        {return(maketoken(RESERVED, IF));}
-then      {return(maketoken(RESERVED, THEN));}
-else      {return(maketoken(RESERVED, ELSE));}
-begin     {return(maketoken(RESERVED, BEGINBEGIN));}
-end       {return(maketoken(RESERVED, END));}
+{ws}       { /* no action and no return */ }
+{comments} { /* no action and no return */ }  ; could remove?
+""         { /* no action and no return */ }  ; could remove?
+
+"(*"    { loop:
+          while (input() != '*');
+          switch (input())
+                  {
+                  case ')': break;
+                  case '*': unput('*');
+                  default: goto loop;
+                  }
+          }
+
 {id}      {return(install_id());}
 {fnumber} {return(install_fnum());}
-"<"       {return(maketoken(OPERATOR, LT));}
-"<="      {return(maketoken(OPERATOR, LE));}
+{string}  {return(install_string());}
+{number}  {return(install_number());}
+
+"+"       {return(maketoken(OPERATOR, PLUS));}
+"-"       {return(maketoken(OPERATOR, MINUS));}
+"*"       {return(maketoken(OPERATOR, TIMES));} 
+"/"       {return(maketoken(OPERATOR, DIVIDE));}
+":="      {return(maketoken(OPERATOR, ASSIGN));}
 "="       {return(maketoken(OPERATOR, EQ));}
 "<>"      {return(maketoken(OPERATOR, NE));}
-">"       {return(maketoken(OPERATOR, GT));}
+"<"       {return(maketoken(OPERATOR, LT));}
+"<="      {return(maketoken(OPERATOR, LE));}
 ">="      {return(maketoken(OPERATOR, GE));}
-":="      {return(maketoken(OPERATOR, ASSIGN));}
+">"       {return(maketoken(OPERATOR, GT));}
+"^"       {return(maketoken(OPERATOR, POINT));} 
 "."       {return(maketoken(OPERATOR, DOT));}
+
+";"       {return(maketoken(DELIMITER, COMMA));}
 ";"       {return(maketoken(DELIMITER, SEMICOLON));}
+":"       {return(maketoken(DELIMITER, COLON));}
+"("       {return(maketoken(DELIMITER, LPAREN));}
+")"       {return(maketoken(DELIMITER, RPAREN));}
+"["       {return(maketoken(DELIMITER, LBRACKET));}
+"]"       {return(maketoken(DELIMITER, RBRACKET));}
+".."      {return(maketoken(DELIMITER, DOTDOT));}  
+
+
+array        {return(maketoken(RESERVED, ARRAY));}
+downto       {return(maketoken(RESERVED, DOWNTO));}
+function     {return(maketoken(RESERVED, FUNCTION));}
+of           {return(maketoken(RESERVED, OF));}
+repeat       {return(maketoken(RESERVED, REPEAT));}
+until        {return(maketoken(RESERVED, UNTIL));}
+begin        {return(maketoken(RESERVED, BEGINBEGIN));}
+else         {return(maketoken(RESERVED, ELSE));}
+goto         {return(maketoken(RESERVED, GOTO));}
+packed       {return(maketoken(RESERVED, PACKED));}
+set          {return(maketoken(RESERVED, SET));}
+var          {return(maketoken(RESERVED, VAR));}
+case         {return(maketoken(RESERVED, CASE));}
+end          {return(maketoken(RESERVED, END));}
+if           {return(maketoken(RESERVED, IF));}
+procedure    {return(maketoken(RESERVED, PROCEDURE));}
+then         {return(maketoken(RESERVED, THEN));}
+while        {return(maketoken(RESERVED, WHILE));}
+const        {return(maketoken(RESERVED, CONST));}
+file         {return(maketoken(RESERVED, FILEF));}
+label        {return(maketoken(RESERVED, LABEL));}
+program      {return(maketoken(RESERVED, PROGRAM));}
+to           {return(maketoken(RESERVED, TO));}
+with         {return(maketoken(RESERVED, WITH));}
+do           {return(maketoken(RESERVED, DO));}
+for          {return(maketoken(RESERVED, FOR));}
+nil          {return(maketoken(RESERVED, NIL));}
+record       {return(maketoken(RESERVED, RECORD));}
+type         {return(maketoken(RESERVED, TYPE));}
+
 
 %%
 
@@ -128,5 +190,40 @@ int install_fnum() {  /* Note -- you may use sscanf for this assignment. */
   yylval->realval = fnum;
   return(NUMBER);
  }
+
+int install_number() {
+  int number;
+  yylval = (TOKEN) talloc();
+  yylval->tokentype = NUMBERTOK;
+  yylval->basicdt = INTEGER;
+  /* printf("num %10s   n = %4d\n",yytext,yyleng); */
+  sscanf(yytext, "%d", &number);
+  yylval->intval = number;
+  return(NUMBER);
+}
+
+
+int install_string(){
+  int size = 0;
+  int j;
+  int length = yyleng;
+  yylval = (TOKEN) talloc();
+  yylval -> tokentype = STRINGTOK;
+  for (j = 1; j < length; j++){
+    if(yytext[j]=='\''&& yytext[j+1]=='\''){
+        yylval->stringval[index] = yytext[j];
+        j++;
+      }else{
+        yylval->stringval[index] = yytext[j];  
+      }
+      size++;
+  }
+  if(size > 15){
+    size = 15;
+  }
+  yylval->stringval[size] = '\0'
+  
+  return(STRING);
+}
 
 int yywrap() {  return(1);  }       /* lex may need this. */
