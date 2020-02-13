@@ -69,8 +69,8 @@ string   (\'(.)*?\')
 %%
 
 {ws}       { /* no action and no return */ }
-{comments} { /* no action and no return */ }  /*could remove?*/
-""         { /* no action and no return */ }  /*could remove?*/
+{comments} { /* no action and no return */ }  
+""         { /* no action and no return */ }  
 
 "(*"    { loop:
           while (input() != '*');
